@@ -13,13 +13,13 @@
 
     </head>
     <body>
-        <div class="min-w-screen min-h-screen bg-gradient-to-r from-gray-800 to-gray-400 flex items-center justify-center px-5 py-5">
+        <div class="min-w-screen min-h-screen bg-gradient-to-r from-rose-800 to-rose-400 flex items-center justify-center px-5 py-5">
             <div class="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style="max-width:1000px">
                 <div class="md:flex w-full">
                     <div class="hidden md:flex w-1/2 bg-white py-10 px-10 justify-center">                        
                         <div class="w-full mt-16">
                             <div class="flex items-center justify-center">
-                                <img width="150px" height="150px" src="{{ asset('assets/logo_blue.png') }}" alt="logo"/>
+                                <img width="150px" height="150px" src="{{ asset('assets/logo.png') }}" alt="logo"/>
                             </div>                            
                             <img src="{{ asset('assets/form1.png') }}" alt="form">
                         </div>
@@ -76,7 +76,7 @@
                                 <a href="" class="text-sm text-black"><span>forgot password?</span></a>
                                 <div class="flex -mx-3 mt-4">
                                     <div class="w-full px-3 mb-5">
-                                        <button type="submit" onclick="handleSignIn()" id="signInButton" class="disabled:opacity-25 block w-full max-w-xs mx-auto bg-gray-800 hover:bg-gray-900 focus:bg-gray-800 text-white rounded-lg px-3 py-3 font-semibold">SIGN IN</button>
+                                        <button type="submit" onclick="handleSignIn()" id="signInButton" class="disabled:opacity-25 block w-full max-w-xs mx-auto bg-rose-800 hover:bg-rose-900 focus:bg-rose-800 text-white rounded-lg px-3 py-3 font-semibold">SIGN IN</button>
                                     </div>
                                 </div>
                             </div>
