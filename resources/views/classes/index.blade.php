@@ -1,20 +1,5 @@
 @extends('layouts.app')
 @section('bodycontent')
-<nav class="bg-gray-50 dark:bg-gray-700">
-    <div class="max-w-screen-xl px-4 py-3 mx-auto md:px-6">
-        <div class="flex items-center">
-            <ul class="flex flex-row mt-0 mr-6 space-x-4 text-sm font-medium">
-                <li>
-                    <a href="{{ route('users.index') }}" class="bg-gray-500 border-gray-600 text-white px-3 py-1 flex space-x-2 mt-5 rounded-md border border-gray-50 cursor-pointer hover:bg-gray-400 hover:border-gray-500 hover:text-gray-50">Students</a>
-                </li>
-                <li>
-                    <a href="{{ route('users.staff') }}" class="px-3 py-1 flex space-x-2 mt-5 rounded-md border border-gray-50 cursor-pointer hover:bg-gray-400 hover:border-gray-500 hover:text-gray-50">Staff</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
 @if (session('status'))
     <div class="text-black m-2 p-4 bg-green-200">
         {{ session('status') }}
@@ -35,7 +20,7 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-gray-100 overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 text-gray-900">
-                <a href="{{ route('users.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-900 focus:ring-offset-2 transition ease-in-out duration-150">Add Student</a><br><br>
+                <a href="{{ route('classes.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-900 focus:ring-offset-2 transition ease-in-out duration-150">Add Class</a><br><br>
                 <div class="overflow-x-auto">
                     <table class="w-full text-sm text-left text-gray-700 dark:text-gray-400">
                         <thead class="text-sm text-gray-800 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400">
@@ -47,13 +32,10 @@
                                     Name
                                 </th>
                                 <th scope="col" class="py-3 px-6">
-                                    Email
+                                    Teacher
                                 </th>
                                 <th scope="col" class="py-3 px-6">
-                                    Contact
-                                </th>
-                                <th scope="col" class="py-3 px-6">
-                                    Type
+                                    Subject
                                 </th>
                                 <th scope="col" class="py-3 px-6">
                                     Status
@@ -64,41 +46,37 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($students as $student)
+                            @foreach($classes as $class)
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">                                    
                                 <td class="py-3 px-6">
-                                    {{ $student->id }}
+                                    {{ $class->id }}
                                 </td>
                                 <td class="py-3 px-6">
-                                    {{ $student->name }}
+                                    {{ $class->name }}
                                 </td>
                                 <td class="py-3 px-6">
-                                    {{ $student->email }}
+                                    {{ $class->teacher->name }}
                                 </td>
                                 <td class="py-3 px-6">
-                                    {{ $student->contact }}
+                                    {{ $class->subject->name }}
                                 </td>
                                 <td class="py-3 px-6">
-                                    @if($student->type == 3)
-                                    Student
-                                    @endif
-                                </td>
-                                <td class="py-3 px-6">
-                                    @if($student->status == 1)
+                                    @if($class->status == 1)
                                     <span class="bg-gradient-to-tl from-green-600 to-lime-400 px-2 text-xs rounded py-1 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white">Active</span>
                                     @else
                                     <span class="bg-gradient-to-tl from-red-600 to-pink-400 px-2 text-xs rounded py-1 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white">Deactivated</span>
                                     @endif
                                 </td>
                                 <td class="py-3 px-6"> 
-                                    <a href="{{ route('users.edit', $student) }}" class="inline-flex items-center px-4 py-2 bg-yellow-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-yellow-400 focus:bg-yellow-700 active:bg-yellow-900 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 transition ease-in-out duration-150" >Edit</a> 
-                                    <button type="button" value="{{ $student->id }}" data-modal-toggle="deletePost" class="deleteBtn inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150">Delete</button>                                        
+                                    <a href="{{ route('classes.view', $class) }}" title="view" class="inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500 active:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition ease-in-out duration-150"><img src="{{ asset('assets/folder_open.svg') }}" alt="View Icon" class="w-3 h-3"></a>
+                                    <a href="{{ route('classes.edit', $class) }}" class="inline-flex items-center px-4 py-2 bg-yellow-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-yellow-400 focus:bg-yellow-700 active:bg-yellow-900 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 transition ease-in-out duration-150"><img src="{{ asset('assets/edit.svg') }}" alt="Edit Icon" class="w-3 h-3"></a> 
+                                    <button type="button" value="{{ $class->id }}" data-modal-toggle="deletePost" class="deleteBtn inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150"><img src="{{ asset('assets/trash.svg') }}" alt="Delete Icon" class="w-3 h-3"></button>                                        
                                 </td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
-                    {{ $students->links() }}
+                    {{ $classes->links() }}
                 </div>                                                                       
             </div>
         </div>
@@ -114,7 +92,7 @@
                 <span class="sr-only">Close modal</span>
             </button>
             <div class="p-6 text-center">
-                <form method="POST" action="{{ route('users.destroy', 'data_id') }}">
+                <form method="POST" action="{{ route('classes.destroy', 'data_id') }}">
                     @csrf
                     @method('DELETE')
                     <svg aria-hidden="true" class="mx-auto mb-4 text-gray-400 w-14 h-14 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>

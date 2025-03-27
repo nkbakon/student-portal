@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('type')->comment("1 => Admin 2 => Account Manager 3 => Account Payable 4 => ERO Portal")->after('name');
+            $table->integer('type')->comment("1 => Admin 2 => Teacher 3 => Student")->after('name');
             $table->string('contact')->after('type')->unique();
-            $table->integer('status')->default(1)->comment("1 => active 2 => deactivated")->after('email');
+            $table->integer('status')->default(1)->comment("1 => active 2 => deactivated 3=> pending")->after('email');
         });
     }
 

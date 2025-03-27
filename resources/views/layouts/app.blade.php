@@ -25,25 +25,33 @@
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100 hidden md:block"> 
             <div class="flex bg-white">
-                <div class="md:flex w-2/5 md:w-1/5 h-screen sticky text-white top-0 bg-rose-700 border-r hidden">
+                <div class="md:flex w-2/5 md:w-1/5 h-screen sticky text-white top-0 bg-blue-700 border-r hidden">
                     <div class="mx-auto py-5">
                         <ul>
                             <a href="{{ route('dashboard') }}"><li class="">					
                                 <img class="justify-center" width="150px" height="150px" src="{{ asset('assets/logo1.png') }}" alt="logo"/>
                             </li></a>
-                            <a href="{{ route('dashboard') }}"><li class="{{ (request()->segment(1) == 'dashboard') ? 'bg-rose-900 border-rose-900': '' }} px-3 py-1 flex space-x-2 mt-10 rounded-md border-rose-800 cursor-pointer hover:bg-rose-900 hover:border-rose-900">					
+                            <a href="{{ route('dashboard') }}"><li class="{{ (request()->segment(1) == 'dashboard') ? 'bg-blue-900 border-blue-900': '' }} px-3 py-1 flex space-x-2 mt-10 rounded-md border-blue-800 cursor-pointer hover:bg-blue-900 hover:border-blue-900">					
                                 <img src="{{ asset('assets/home.svg') }}" alt="Dashboard Icon" class="w-5 h-5">
                                 <span class="font-semibold">Dashboard</span>
                             </li></a>
-                            <a href="{{ route('profile.index') }}"><li class="{{ (request()->segment(1) == 'profile') ? 'bg-rose-900 border-rose-900': '' }} px-3 py-1 flex space-x-2 mt-4 rounded-md border-rose-800 cursor-pointer hover:bg-rose-900 hover:border-rose-900">					
+                            <a href="{{ route('profile.index') }}"><li class="{{ (request()->segment(1) == 'profile') ? 'bg-blue-900 border-blue-900': '' }} px-3 py-1 flex space-x-2 mt-4 rounded-md border-blue-800 cursor-pointer hover:bg-blue-900 hover:border-blue-900">					
                                 <img src="{{ asset('assets/profile.svg') }}" alt="Profile Icon" class="w-5 h-5">
                                 <span class="font-semibold">Profile</span>
                             </li></a>
-                            <a href="{{ route('users.index') }}"><li class="{{ (request()->segment(1) == 'users') ? 'bg-rose-900 border-rose-900': '' }} px-3 py-1 flex space-x-2 mt-4 rounded-md border-rose-800 cursor-pointer hover:bg-rose-900 hover:border-rose-900">					
+                            <a href="{{ route('classes.index') }}"><li class="{{ (request()->segment(1) == 'classes') ? 'bg-blue-900 border-blue-900': '' }} px-3 py-1 flex space-x-2 mt-4 rounded-md border-blue-800 cursor-pointer hover:bg-blue-900 hover:border-blue-900">					
+                                <img src="{{ asset('assets/class.svg') }}" alt="Class Icon" class="w-5 h-5">
+                                <span class="font-semibold">Classes</span>
+                            </li></a>
+                            <a href="{{ route('subjects.index') }}"><li class="{{ (request()->segment(1) == 'subjects') ? 'bg-blue-900 border-blue-900': '' }} px-3 py-1 flex space-x-2 mt-4 rounded-md border-blue-800 cursor-pointer hover:bg-blue-900 hover:border-blue-900">					
+                                <img src="{{ asset('assets/subject.svg') }}" alt="Subject Icon" class="w-5 h-5">
+                                <span class="font-semibold">Subjects</span>
+                            </li></a>
+                            <a href="{{ route('users.index') }}"><li class="{{ (request()->segment(1) == 'users') ? 'bg-blue-900 border-blue-900': '' }} px-3 py-1 flex space-x-2 mt-4 rounded-md border-blue-800 cursor-pointer hover:bg-blue-900 hover:border-blue-900">					
                                 <img src="{{ asset('assets/users.svg') }}" alt="Users Icon" class="w-5 h-5">    
                                 <span class="font-semibold">Users</span>
                             </li></a>
-                            <a href="{{ route('logout') }}"><li class="{{ (request()->segment(1) == 'logout') ? 'bg-rose-900 border-rose-900': '' }} px-3 py-1 flex space-x-2 mt-4 rounded-md border-rose-800 cursor-pointer hover:bg-rose-900 hover:border-rose-900">					
+                            <a href="{{ route('logout') }}"><li class="{{ (request()->segment(1) == 'logout') ? 'bg-blue-900 border-blue-900': '' }} px-3 py-1 flex space-x-2 mt-4 rounded-md border-blue-800 cursor-pointer hover:bg-blue-900 hover:border-blue-900">					
                                 <img src="{{ asset('assets/logout.svg') }}" alt="Log Out Icon" class="w-5 h-5">
                                 <span class="font-semibold">Log Out</span>
                             </li></a>          
@@ -57,7 +65,7 @@
             </diV>               
         </div> 
         <div class="block md:hidden min-h-screen bg-gray-100">
-            <div class="bg-rose-700 text-white">
+            <div class="bg-blue-700 text-white">
                 <div class="sticky container mx-auto px-6 py-4 flex justify-end items-center text-gray-900">                    
                     <div class="block md:hidden">
                         <button id="menu-toggle" class="text-white focus:outline-none">
@@ -73,19 +81,27 @@
                             <a href="{{ route('dashboard') }}"><li class="">					
                                 <img class="justify-center" width="150px" height="150px" src="{{ asset('assets/logo1.png') }}" alt="logo"/>
                             </li></a>
-                            <a href="{{ route('dashboard') }}"><li class="{{ (request()->segment(1) == 'dashboard') ? 'bg-rose-900 border-rose-900': '' }} px-3 py-1 flex space-x-2 mt-10 rounded-md border-rose-800 cursor-pointer hover:bg-rose-900 hover:border-rose-900">					
+                            <a href="{{ route('dashboard') }}"><li class="{{ (request()->segment(1) == 'dashboard') ? 'bg-blue-900 border-blue-900': '' }} px-3 py-1 flex space-x-2 mt-10 rounded-md border-blue-800 cursor-pointer hover:bg-blue-900 hover:border-blue-900">					
                                 <img src="{{ asset('assets/home.svg') }}" alt="Dashboard Icon" class="w-5 h-5">
                                 <span class="font-semibold">Dashboard</span>
                             </li></a>
-                            <a href="{{ route('profile.index') }}"><li class="{{ (request()->segment(1) == 'profile') ? 'bg-rose-900 border-rose-900': '' }} px-3 py-1 flex space-x-2 mt-4 rounded-md border-rose-800 cursor-pointer hover:bg-rose-900 hover:border-rose-900">					
+                            <a href="{{ route('classes.index') }}"><li class="{{ (request()->segment(1) == 'classes') ? 'bg-blue-900 border-blue-900': '' }} px-3 py-1 flex space-x-2 mt-4 rounded-md border-blue-800 cursor-pointer hover:bg-blue-900 hover:border-blue-900">					
+                                <img src="{{ asset('assets/class.svg') }}" alt="Class Icon" class="w-5 h-5">
+                                <span class="font-semibold">Classes</span>
+                            </li></a>
+                            <a href="{{ route('subjects.index') }}"><li class="{{ (request()->segment(1) == 'subjects') ? 'bg-blue-900 border-blue-900': '' }} px-3 py-1 flex space-x-2 mt-4 rounded-md border-blue-800 cursor-pointer hover:bg-blue-900 hover:border-blue-900">					
+                                <img src="{{ asset('assets/subject.svg') }}" alt="Subject Icon" class="w-5 h-5">
+                                <span class="font-semibold">Subjects</span>
+                            </li></a>
+                            <a href="{{ route('profile.index') }}"><li class="{{ (request()->segment(1) == 'profile') ? 'bg-blue-900 border-blue-900': '' }} px-3 py-1 flex space-x-2 mt-4 rounded-md border-blue-800 cursor-pointer hover:bg-blue-900 hover:border-blue-900">					
                                 <img src="{{ asset('assets/profile.svg') }}" alt="Profile Icon" class="w-5 h-5">
                                 <span class="font-semibold">Profile</span>
                             </li></a>
-                            <a href="{{ route('users.index') }}"><li class="{{ (request()->segment(1) == 'users') ? 'bg-rose-900 border-rose-900': '' }} px-3 py-1 flex space-x-2 mt-4 rounded-md border-rose-800 cursor-pointer hover:bg-rose-900 hover:border-rose-900">					
+                            <a href="{{ route('users.index') }}"><li class="{{ (request()->segment(1) == 'users') ? 'bg-blue-900 border-blue-900': '' }} px-3 py-1 flex space-x-2 mt-4 rounded-md border-blue-800 cursor-pointer hover:bg-blue-900 hover:border-blue-900">					
                                 <img src="{{ asset('assets/users.svg') }}" alt="Users Icon" class="w-5 h-5">    
                                 <span class="font-semibold">Users</span>
                             </li></a>
-                            <a href="{{ route('logout') }}"><li class="{{ (request()->segment(1) == 'logout') ? 'bg-rose-900 border-rose-900': '' }} px-3 py-1 flex space-x-2 mt-4 rounded-md border-rose-800 cursor-pointer hover:bg-rose-900 hover:border-rose-900">					
+                            <a href="{{ route('logout') }}"><li class="{{ (request()->segment(1) == 'logout') ? 'bg-blue-900 border-blue-900': '' }} px-3 py-1 flex space-x-2 mt-4 rounded-md border-blue-800 cursor-pointer hover:bg-blue-900 hover:border-blue-900">					
                                 <img src="{{ asset('assets/logout.svg') }}" alt="Log Out Icon" class="w-5 h-5">
                                 <span class="font-semibold">Log Out</span>
                             </li></a>          
