@@ -4,59 +4,130 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 text-gray-900">
-                <a href="{{ route('users.index') }}" title="back" class="inline-flex items-center px-4 py-2 bg-gray-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-900 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition ease-in-out duration-150" ><i class="fa-solid fa-arrow-left-long"></i></a><br><br>
+                <a href="{{ route('users.staff') }}" title="back" class="inline-flex items-center px-4 py-2 bg-gray-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-900 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition ease-in-out duration-150" ><i class="fa-solid fa-arrow-left-long"></i></a><br><br>
                 <h5 class="font-bold text-center text-gray-900 text-xl">New Staff</h5><br>                 
                 <form action="{{ route('users.store') }}" method="POST">
                     @csrf
-                    <div>
-                        <label for="name">Enter Full Name</label><br>
-                        <input type="text" name="name" class="block w-96 appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="full name" required>
-                    </div>
-                    @error('name') <span class="text-red-500 error">{{ $message }}</span><br> @enderror
-                    <br>
-                    <div>
-                        <label for="type">Select Staff Type</label><br>
-                        <select name="type" id="type" class="block w-96 appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" required>
-                            <option value="" disabled selected>Select type from here</option>
-                            <option value="1">Admin</option>
-                            <option value="2">Teacher</option>
-                        </select> 
-                    </div>
-                    @error('type') <span class="text-red-500 error">{{ $message }}</span><br> @enderror
-                    <br>
-                    <div>
-                        <label for="contact">Enter Contact Number</label><br>
-                        <input type="number" name="contact" id="contact" class="block w-96 appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="contact number" required>
-                    </div>
-                    <p id="danger_alert2" class="text-sm text-red-500 mb-2" style="display:none;"></p>
-                    @error('contact') <span class="text-red-500 error">{{ $message }}</span><br> @enderror
-                    <br>                    
-                    <div>
-                        <label for="email">Enter Email</label><br>
-                        <input type="text" name="email" id="email" class="block w-96 appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="email" required>
-                    </div>
-                    <p id="danger_alert1" class="text-sm text-red-500 mb-2" style="display:none;"></p>
-                    @error('email') <span class="text-red-500 error">{{ $message }}</span><br> @enderror
-                    <br>
-                    <div>
-                        <label for="password">Password</label><br>
-                        <div class="relative w-96">
-                            <input type="password" name="password" id="addpassword" autocomplete="new-password" class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 pr-10 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="password" required>
-                            <button type="button" id="togglePassword" class="hidden absolute inset-y-0 right-0 flex items-center pr-3 text-gray-600 focus:outline-none">
-                                <i class="fa-regular fa-eye"></i>
-                            </button>
+                    <div class="flex">
+                        <div>
+                            <div>
+                                <label for="name">Full Name</label><br>
+                                <input type="text" name="name" class="block w-96 appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="full name" required>
+                            </div>
+                            @error('name') <span class="text-red-500 error">{{ $message }}</span><br> @enderror
+                            <br>                            
+                            <div>
+                                <label for="email">Email</label><br>
+                                <input type="text" name="email" id="email" class="block w-96 appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="email" required>
+                            </div>
+                            <p id="danger_alert1" class="text-sm text-red-500 mb-2" style="display:none;"></p>
+                            @error('email') <span class="text-red-500 error">{{ $message }}</span><br> @enderror
+                            <br>
+                            <div>
+                                <label for="district">District</label><br>
+                                <select name="district" class="block w-96 appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" required>
+                                    <option value="" disabled selected>Select a district from here</option>
+                                    <option value="Ampara">Ampara</option>
+                                    <option value="Anuradhapura">Anuradhapura</option>
+                                    <option value="Badulla">Badulla</option>
+                                    <option value="Batticaloa">Batticaloa</option>
+                                    <option value="Colombo">Colombo</option>
+                                    <option value="Galle">Galle</option>
+                                    <option value="Gampaha">Gampaha</option>
+                                    <option value="Hambantota">Hambantota</option>
+                                    <option value="Jaffna">Jaffna</option>
+                                    <option value="Kalutara">Kalutara</option>
+                                    <option value="Kandy">Kandy</option>
+                                    <option value="Kegalle">Kegalle</option>
+                                    <option value="Kilinochchi">Kilinochchi</option>
+                                    <option value="Kurunegala">Kurunegala</option>
+                                    <option value="Mannar">Mannar</option>
+                                    <option value="Matale">Matale</option>
+                                    <option value="Matara">Matara</option>
+                                    <option value="Monaragala">Monaragala</option>
+                                    <option value="Mullaitivu">Mullaitivu</option>
+                                    <option value="Nuwara Eliya">Nuwara Eliya</option>
+                                    <option value="Polonnaruwa">Polonnaruwa</option>
+                                    <option value="Puttalam">Puttalam</option>
+                                    <option value="Ratnapura">Ratnapura</option>
+                                    <option value="Trincomalee">Trincomalee</option>
+                                    <option value="Vavuniya">Vavuniya</option>
+                                </select> 
+                            </div>
+                            @error('district') <span class="text-red-500 error">{{ $message }}</span><br> @enderror
+                            <br>
+                            <div>
+                                <label for="address">Address</label><br>
+                                <input type="text" name="address" class="block w-96 appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="address" required>
+                            </div>
+                            @error('address') <span class="text-red-500 error">{{ $message }}</span><br> @enderror
+                            <br>
+                            <div>
+                                <label for="password">Password</label><br>
+                                <div class="relative w-96">
+                                    <input type="password" name="password" id="addpassword" autocomplete="new-password" class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 pr-10 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="password" required>
+                                    <button type="button" id="togglePassword" class="hidden absolute inset-y-0 right-0 flex items-center pr-3 text-gray-600 focus:outline-none">
+                                        <i class="fa-regular fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-2">*The password must contain at least one uppercase letter, <br> one number, and one special character.</p>
+                            @error('password') <span class="text-red-500 error">{{ $message }}</span><br> @enderror
+                            <br>
+                            <div>
+                                <label for="confirm_password">Confirm Password</label><br>
+                                <input type="password" name="confirm_password" id="cmpassword" autocomplete="new-password" class="block w-96 appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="confirm password" required>        
+                                <span id='passwordcheck'></span>
+                            </div>
+                            @error('confirm_password') <span class="text-red-500 error">{{ $message }}</span><br> @enderror
+                            <br>
+                        </div>
+                        <div class="ml-24">
+                            <div>
+                                <label for="type">Select Staff Type</label><br>
+                                <select name="type" id="type" class="block w-96 appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" required onchange="toggleUser()">
+                                    <option value="" disabled selected>Select type from here</option>
+                                    <option value="1">Admin</option>
+                                    <option value="2">Teacher</option>
+                                </select> 
+                            </div>
+                            @error('type') <span class="text-red-500 error">{{ $message }}</span><br> @enderror
+                            <br>
+                            <div>
+                                <label for="contact">Contact Number</label><br>
+                                <input type="number" name="contact" id="contact" class="block w-96 appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="contact number" required>
+                            </div>
+                            <p id="danger_alert2" class="text-sm text-red-500 mb-2" style="display:none;"></p>
+                            @error('contact') <span class="text-red-500 error">{{ $message }}</span><br> @enderror
+                            <br>                            
+                            <div>
+                                <label for="gender">Gender</label><br>
+                                <select name="gender" class="block w-96 appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" required>
+                                    <option value="" disabled selected>Select a gender from here</option>
+                                    <option value="1">Male</option>
+                                    <option value="2">Female</option>
+                                    <option value="3">Other</option>
+                                </select> 
+                            </div>
+                            @error('gender') <span class="text-red-500 error">{{ $message }}</span><br> @enderror
+                            <br>                            
+                            <div id="teach_subjects">
+                                <label for="subjects" class="mb-4">Subjects to Teach</label><br>
+                                @php
+                                    $subjects = App\Models\Subject::all();
+                                @endphp
+                                <div class="flex flex-wrap">
+                                    @foreach($subjects as $subject)
+                                        <div class="w-1/3 p-2 flex items-center">
+                                            <input id="subject-{{ $subject->id }}" type="checkbox" name="subjects[]" value="{{ $subject->id }}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                            <label for="subject-{{ $subject->id }}" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ $subject->name }}</label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <br>
+                            </div>
                         </div>
                     </div>
-                    <p class="text-sm text-gray-600 mb-2">*The password must contain at least one uppercase letter, one number, and one special character.</p>
-                    @error('password') <span class="text-red-500 error">{{ $message }}</span><br> @enderror
-                    <br>
-                    <div>
-                        <label for="confirm_password">Confirm Password</label><br>
-                        <input type="password" name="confirm_password" id="cmpassword" autocomplete="new-password" class="block w-96 appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="confirm password" required>        
-                        <span id='passwordcheck'></span>
-                    </div>
-                    @error('confirm_password') <span class="text-red-500 error">{{ $message }}</span><br> @enderror
-                    <br>
                     <button type="submit" class="passwordvalid disabled:opacity-25 inline-flex items-center px-4 py-2 bg-blue-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-900 focus:ring-offset-2 transition ease-in-out duration-150 disabled:opacity-25">Save</button>                        
                 </form>
             </div>
@@ -180,6 +251,21 @@
         if ($('#addpassword').val() == '' && $('#cmpassword').val() == '') {
             $('#passwordcheck').html('');
         }  
+        });
+    </script>
+    <script>
+        function toggleUser() {
+            var type = document.getElementById('type').value;
+            
+            if (type == "1") {
+                $('#teach_subjects').hide();
+            } else {
+                $('#teach_subjects').show();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleUser();
         });
     </script>
 @endpush

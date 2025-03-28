@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\StudentSubject;
+use App\Models\TeacherSubject;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -24,6 +26,13 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'type' => 'required',
+            'district' => 'required',
+            'address' => 'required',
+            'parent_name' => 'required',
+            'parent_contact' => 'required',
+            'dob' => 'required',
+            'exam' => 'required',
+            'gender' => 'required',
             'contact' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|unique:users,contact',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6|regex:/^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{6,}$/',
@@ -35,8 +44,37 @@ class UserController extends Controller
         $user->type = $request->type;
         $user->contact = $request->contact;
         $user->email = $request->email;
+        $user->district = $request->district;
+        $user->address = $request->address;
+        if($user->type == 3){
+            $user->parent_name = $request->parent_name;
+            $user->parent_contact = $request->parent_contact;
+            $user->parent_name2 = $request->parent_name2;
+            $user->parent_contact2 = $request->parent_contact2;
+            $user->exam = $request->exam;
+            $user->dob = $request->dob;
+        }
+        $user->gender = $request->gender;
         $user->password = Hash::make($request->password);
         $user->save();
+
+        if($user->type == 3){
+            foreach($request->subjects as $subject){
+                $picked_subject = new StudentSubject();
+                $picked_subject->student_id = $user->id;
+                $picked_subject->subject_id = $subject;
+                $picked_subject->save();
+            }
+        }
+        
+        if($user->type == 2){
+            foreach($request->subjects as $subject){
+                $teach_subject = new TeacherSubject();
+                $teach_subject->teacher_id = $user->id;
+                $teach_subject->subject_id = $subject;
+                $teach_subject->save();
+            }
+        }
 
         if($user){
             if($user->type == 3){
