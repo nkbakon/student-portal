@@ -28,10 +28,6 @@ class UserController extends Controller
             'type' => 'required',
             'district' => 'required',
             'address' => 'required',
-            'parent_name' => 'required',
-            'parent_contact' => 'required',
-            'dob' => 'required',
-            'exam' => 'required',
             'gender' => 'required',
             'contact' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|unique:users,contact',
             'email' => 'required|email|unique:users,email',
@@ -88,7 +84,11 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        return view('users.edit', compact('user'));
+        if($user->type == 3){
+            return view('users.edit', compact('user'));
+        }else{
+            return view('users.edit_staff', compact('user'));
+        }
     }
 
     public function update(Request $request, User $user)
@@ -96,6 +96,9 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required',
             'type' => 'required',
+            'district' => 'required',
+            'address' => 'required',
+            'gender' => 'required',
             'contact' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|unique:users,contact, ' . $user->id,
             'email' => 'required|email|unique:users,email,' . $user->id,
             'status' => 'required',
@@ -105,8 +108,39 @@ class UserController extends Controller
         $user->type = $request->type;
         $user->contact = $request->contact;
         $user->email = $request->email;
+        $user->district = $request->district;
+        $user->address = $request->address;
+        if($user->type == 3){
+            $user->parent_name = $request->parent_name;
+            $user->parent_contact = $request->parent_contact;
+            $user->parent_name2 = $request->parent_name2;
+            $user->parent_contact2 = $request->parent_contact2;
+            $user->exam = $request->exam;
+            $user->dob = $request->dob;
+        }
+        $user->gender = $request->gender;
         $user->status = $request->status;
         $user->save();
+
+        if($user->type == 3){
+            $old_subjects = StudentSubject::where('student_id', $user->id)->delete();
+            foreach($request->subjects as $subject){
+                $picked_subject = new StudentSubject();
+                $picked_subject->student_id = $user->id;
+                $picked_subject->subject_id = $subject;
+                $picked_subject->save();
+            }
+        }
+        
+        if($user->type == 2){
+            $old_subjects = TeacherSubject::where('teacher_id', $user->id)->delete();
+            foreach($request->subjects as $subject){
+                $teach_subject = new TeacherSubject();
+                $teach_subject->teacher_id = $user->id;
+                $teach_subject->subject_id = $subject;
+                $teach_subject->save();
+            }
+        }
 
         if($user->type == 3){
             return redirect()->route('users.index')->with('success', 'Student updated successfully.');
@@ -120,10 +154,13 @@ class UserController extends Controller
         $user = User::find($request->data_id);
         if($user)
         {
-            $user->delete();
             if($user->type == 3){
+                $old_subjects = StudentSubject::where('student_id', $user->id)->delete();
+                $user->delete();
                 return redirect()->route('users.index')->with('delete', 'Student deleted successfully.');
             }else{
+                $old_subjects = TeacherSubject::where('teacher_id', $user->id)->delete();
+                $user->delete();
                 return redirect()->route('users.staff')->with('delete', 'Staff deleted successfully.');
             }
         }
