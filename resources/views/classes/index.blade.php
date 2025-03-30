@@ -55,10 +55,14 @@
                                     {{ $class->name }}
                                 </td>
                                 <td class="py-3 px-6">
+                                @if(isset($class->teacher))
                                     {{ $class->teacher->name }}
+                                @endif
                                 </td>
                                 <td class="py-3 px-6">
+                                @if(isset($class->subject))
                                     {{ $class->subject->name }}
+                                @endif
                                 </td>
                                 <td class="py-3 px-6">
                                     @if($class->status == 1)

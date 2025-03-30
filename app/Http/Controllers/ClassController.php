@@ -80,4 +80,40 @@ class ClassController extends Controller
             ->with('delete', 'No student assign found!');
         }    
     }
+
+    public function edit(TClass $class)
+    {
+        return view('classes.edit', compact('class'));
+    }
+
+    public function update(Request $request, TClass $class)
+    {
+        $request->validate([
+            'teacher_id' => 'required',
+            'subject_id' => 'required',
+            'name' => 'required',
+        ]);
+
+        $class->name = $request->name;
+        $class->teacher_id = $request->teacher_id;
+        $class->subject_id = $request->subject_id;
+        $class->save();
+        
+        return redirect()->route('classes.index')->with('success', 'Class updated successfully.');
+    }
+
+    public function destroy(Request $request)
+    {
+        $class = TClass::find($request->data_id);
+        if($class)
+        {  
+            $class_students = ClassStudent::where('class_id', $class->id)->delete();
+            $class->delete();
+            return redirect()->route('classes.index')->with('delete', 'Class deleted successfully.');
+        }
+        else
+        {
+            return redirect()->route('classes.index')->with('delete', 'No class found!.');
+        }    
+    }
 }
