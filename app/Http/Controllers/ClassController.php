@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Assignment;
+use App\Models\StudentAssignment;
 use App\Models\TClass;
 use App\Models\ClassStudent;
 
@@ -115,5 +117,51 @@ class ClassController extends Controller
         {
             return redirect()->route('classes.index')->with('delete', 'No class found!.');
         }    
+    }
+
+    public function assignment(TClass $class)
+    {
+        return view('classes.assignment', compact('class'));
+    }
+
+    public function storeAssignment(Request $request, TClass $class)
+    {
+        $request->validate([
+            'name' => 'required',
+        ]);
+
+        $assignment = new Assignment();
+        $assignment->class_id = $class->id;
+        $assignment->name = $request->name;
+        $assignment->due_date = $request->due_date;
+        $assignment->zoom = $request->zoom;
+        $assignment->whatsapp = $request->whatsapp;
+        $assignment->youtube = $request->youtube;
+        $assignment->note = $request->note;
+        $assignment->save();
+
+        $attachment = $request->file('attachment');
+        $folderName = 'attachments';        
+        $path = $attachment->store($folderName, 'public');
+        $originalFileName = $attachment->getClientOriginalName();
+        $assignment->attachment = $path;
+        $assignment->file_name = $originalFileName;
+        $assignment->save();
+
+        $class_students = ClassStudent::where('class_id', $class->id)->get();
+        foreach($class_students as $class_student){
+            $student_assignment = new StudentAssignment();
+            $student_assignment->class_id = $class->id;
+            $student_assignment->assignment_id = $assignment->id;
+            $student_assignment->student_id = $class_student->student_id;
+            $student_assignment->save();
+        }
+
+        if($assignment){
+            return redirect()->route('classes.view', ['class' => $class->id])
+            ->with('status', 'Assignment stored successfully.');        
+        }
+        return redirect()->route('classes.view', ['class' => $class->id])
+        ->with('delete', 'Assignment astore failed, try again!');
     }
 }

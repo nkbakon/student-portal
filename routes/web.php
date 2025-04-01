@@ -33,6 +33,9 @@ Route::get('classes/{class}/view', [ClassController::class, 'view'])->name('clas
 Route::put('classes/{class}/view/assign', [ClassController::class, 'assign'])->name('classes.assign');
 Route::delete('classes/{class}/view/assign/destroy', [ClassController::class, 'destroyAssign'])->name('classes.destroyAssign');
 
+Route::get('classes/{class}/view/assignment', [ClassController::class, 'assignment'])->name('classes.assignment');
+Route::put('classes/{class}/view/assignment', [ClassController::class, 'storeAssignment'])->name('classes.assignment_store');
+
 Route::get('subjects', [SubjectController::class, 'index'])->name('subjects.index');
 Route::post('subjects/store', [SubjectController::class, 'store'])->name('subjects.store'); 
 Route::put('subjects/update', [SubjectController::class, 'update'])->name('subjects.update');

@@ -124,7 +124,56 @@
                     @endif 
                 </div>
                 <div id="assignment_section" style="display:none">
-                    <h1>Assignment Section</h1>
+                <a href="{{ route('classes.assignment', $class) }}" class="inline-flex items-center px-4 py-2 bg-blue-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-900 focus:ring-offset-2 transition ease-in-out duration-150">Add Assignment</a><br><br>
+                    @if($assigns_count > 0)
+                    <div class="overflow-x-auto">
+                        <h1 class="text-center text-xl text-gray-700">Students</h1>
+                        <table class="w-full text-sm text-left text-gray-700 dark:text-gray-400">
+                            <thead class="text-sm text-gray-800 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="py-3 px-6">
+                                    #
+                                    </th>
+                                    <th scope="col" class="py-3 px-6">
+                                        Name
+                                    </th>
+                                    <th scope="col" class="py-3 px-6">
+                                        Email
+                                    </th>
+                                    <th scope="col" class="py-3 px-6">
+                                        Contact
+                                    </th>
+                                    <th scope="col" class="py-3 px-6">
+                                        Actions
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($assigns as $assign)
+                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">                                    
+                                    <td class="py-3 px-6">
+                                        {{ $assign->student->id }}
+                                    </td>
+                                    <td class="py-3 px-6">
+                                        {{ $assign->student->name }}
+                                    </td>
+                                    <td class="py-3 px-6">
+                                        {{ $assign->student->email }}
+                                    </td>
+                                    <td class="py-3 px-6">
+                                        {{ $assign->student->contact }}
+                                    </td>
+                                    <td class="py-3 px-6">
+                                        <a href="{{ route('classes.view', $class) }}" title="view" class="inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500 active:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition ease-in-out duration-150"><img src="{{ asset('assets/folder_open.svg') }}" alt="View Icon" class="w-3 h-3"></a>
+                                        <button type="button" value="{{ $assign->id }}" data-modal-toggle="deletePost" class="deleteBtn inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150"><img src="{{ asset('assets/trash.svg') }}" alt="Delete Icon" class="w-3 h-3"></button>                                        
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                        {{ $assigns->links() }}
+                    </div>       
+                    @endif 
                 </div>                                                                   
             </div>
         </div>
