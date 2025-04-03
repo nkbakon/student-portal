@@ -34,62 +34,34 @@
                         <div class="flex items-center">
                             <ul class="flex flex-row mt-0 mr-6 space-x-4 text-sm font-medium">
                                 <li>
-                                    <a href="{{ route('classes.view', $class) }}" class="bg-blue-800 border-blue-800 text-white px-3 py-1 flex space-x-2 rounded-md border border-blue-500 cursor-pointer hover:bg-blue-500 hover:border-blue-500 hover:text-white">Students</a>
+                                    <a href="{{ route('classes.view', $class) }}" class="px-3 py-1 flex space-x-2 rounded-md border border-blue-500 cursor-pointer hover:bg-blue-500 hover:border-blue-500 hover:text-white">Students</a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('classes.view_assignment', $class) }}" class="px-3 py-1 flex space-x-2 rounded-md border border-blue-500 cursor-pointer hover:bg-blue-500 hover:border-blue-500 hover:text-white">Assignments</a>
+                                    <a href="{{ route('classes.view_assignment', $class) }}" class="bg-blue-800 border-blue-800 text-white px-3 py-1 flex space-x-2 rounded-md border border-blue-500 cursor-pointer hover:bg-blue-500 hover:border-blue-500 hover:text-white">Assignments</a>
                                 </li>
                             </ul>
                         </div>
                     </div>
                 </nav><br>
-                <div id="student_section">
-                    @php
-                        $students = App\Models\User::where('type', 3)->where('status', 1)->get();
-                    @endphp
-                    <div class="relative inline-block w-full">
-                        <form action="{{ route('classes.assign', $class) }}" method="POST" enctype="multipart/form-data">
-                            @method('PUT')
-                            @csrf
-                            <label for="" class="text-md font-semibold px-1 text-gray-800 mb-2">Assign Students to Class</label>
-                            <div class="flex">
-                                <div class="flex -mx-3 w-full">
-                                    <div class="w-full px-3 mb-2">                                
-                                        <div class="flex">
-                                            <div class="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i class="mdi mdi-email-outline text-gray-400 text-lg"></i></div>
-                                            <select name="student_id" class="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" required>
-                                                <option value="" disabled selected>Select student from here</option>
-                                                @foreach($students as $student)
-                                                    <option value="{{ $student->id }}">{{ $student->name }}</option>
-                                                @endforeach
-                                            </select> 
-                                        </div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <button type="submit" title="complete project" class="ml-4 inline-flex items-center px-2 py-1 bg-green-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition ease-in-out duration-150">Add Student</button>
-                                </div>
-                            </div>
-                            @error('student_id') <span class="text-red-500 error mb-2">{{ $message }}</span><br> @enderror
-                        </form>
-                    </div><br><br>
-                    @if($assigns_count > 0)
+                <div id="assignment_section">
+                    <a href="{{ route('classes.assignment', $class) }}" class="inline-flex items-center px-4 py-2 bg-blue-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-900 focus:ring-offset-2 transition ease-in-out duration-150">Add Assignment</a><br><br>
+                    @if($assignment_count > 0)
                     <div class="overflow-x-auto">
-                        <h1 class="text-center text-xl text-gray-700">Students</h1>
+                        <h1 class="text-center text-xl text-gray-700">Assignments</h1>
                         <table class="w-full text-sm text-left text-gray-700 dark:text-gray-400">
                             <thead class="text-sm text-gray-800 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
                                     <th scope="col" class="py-3 px-6">
-                                    #
+                                        #
                                     </th>
                                     <th scope="col" class="py-3 px-6">
                                         Name
                                     </th>
                                     <th scope="col" class="py-3 px-6">
-                                        Email
+                                        Due Date
                                     </th>
                                     <th scope="col" class="py-3 px-6">
-                                        Contact
+                                        Status
                                     </th>
                                     <th scope="col" class="py-3 px-6">
                                         Actions
@@ -97,32 +69,32 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($assigns as $assign)
+                                @foreach($assignments as $assignment)
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">                                    
                                     <td class="py-3 px-6">
-                                        {{ $assign->student->id }}
+                                        {{ $assignment->id }}
                                     </td>
                                     <td class="py-3 px-6">
-                                        {{ $assign->student->name }}
+                                        {{ $assignment->name }}
                                     </td>
                                     <td class="py-3 px-6">
-                                        {{ $assign->student->email }}
+                                        {{ $assignment->due_date }}
                                     </td>
                                     <td class="py-3 px-6">
-                                        {{ $assign->student->contact }}
+                                        {{ $assignment->status }}
                                     </td>
                                     <td class="py-3 px-6">
-                                        <a href="{{ route('classes.view', $class) }}" title="view" class="inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500 active:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition ease-in-out duration-150"><img src="{{ asset('assets/folder_open.svg') }}" alt="View Icon" class="w-3 h-3"></a>
-                                        <button type="button" value="{{ $assign->id }}" data-modal-toggle="deletePost" class="deleteBtn inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150"><img src="{{ asset('assets/trash.svg') }}" alt="Delete Icon" class="w-3 h-3"></button>                                        
+                                        <a href="{{ route('classes.view', $assignment) }}" title="view" class="inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500 active:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition ease-in-out duration-150"><img src="{{ asset('assets/folder_open.svg') }}" alt="View Icon" class="w-3 h-3"></a>
+                                        <button type="button" value="{{ $assignment->id }}" data-modal-toggle="deletePost" class="deleteBtn inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150"><img src="{{ asset('assets/trash.svg') }}" alt="Delete Icon" class="w-3 h-3"></button>                                        
                                     </td>
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table>
-                        {{ $assigns->links() }}
+                        {{ $assignments->links() }}
                     </div>       
                     @endif 
-                </div>                                                                                  
+                </div>                                                                   
             </div>
         </div>
     </div>
