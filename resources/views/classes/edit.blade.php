@@ -9,7 +9,7 @@
                 <form action="{{ route('classes.update', $class) }}" method="POST" enctype="multipart/form-data">
                     @method('PUT')
                     @csrf
-                    <div class="flex">
+                    <div class="md:flex">
                         <div>
                             <div>
                                 @php
@@ -32,7 +32,7 @@
                             @error('name') <span class="text-red-500 error">{{ $message }}</span><br> @enderror
                             <br>
                         </div>
-                        <div class="ml-24">
+                        <div class="md:ml-24">
                             <div>
                                 @php
                                     $subjects = App\Models\Subject::all();
@@ -46,6 +46,16 @@
                                 </select> 
                             </div>
                             @error('subject_id') <span class="text-red-500 error">{{ $message }}</span><br> @enderror
+                            <br>
+                            <div>
+                                <label for="status">Status</label><br>
+                                <select name="status" class="block w-96 appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" required>
+                                    <option value="" disabled>Select a stauts from here</option>
+                                    <option value="1" @if($class->status === 1) selected @endif>Active</option>
+                                    <option value="2" @if($class->status === 2) selected @endif>Deactivated</option>
+                                </select> 
+                            </div>
+                            @error('status') <span class="text-red-500 error">{{ $message }}</span><br> @enderror
                             <br>
                         </div>
                     </div>

@@ -12,7 +12,7 @@ class ClassController extends Controller
 {
     public function index()
     {
-        $classes = TClass::where('status', 1)->paginate(25);
+        $classes = TClass::orderBy('id', 'desc')->paginate(25);
         return view('classes.index', compact('classes'));
     }
 
@@ -106,6 +106,7 @@ class ClassController extends Controller
         $class->name = $request->name;
         $class->teacher_id = $request->teacher_id;
         $class->subject_id = $request->subject_id;
+        $class->status = $request->status;
         $class->save();
         
         return redirect()->route('classes.index')->with('success', 'Class updated successfully.');
@@ -117,6 +118,8 @@ class ClassController extends Controller
         if($class)
         {  
             $class_students = ClassStudent::where('class_id', $class->id)->delete();
+            $assignments = Assignment::where('class_id', $class->id)->delete();
+            $student_assignments = StudentAssignment::where('class_id', $class->id)->delete();
             $class->delete();
             return redirect()->route('classes.index')->with('delete', 'Class deleted successfully.');
         }

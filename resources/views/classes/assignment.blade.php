@@ -9,7 +9,7 @@
                 <form action="{{ route('classes.assignment_store', $class) }}" method="POST" enctype="multipart/form-data">
                     @method('PUT')
                     @csrf
-                    <div class="flex">
+                    <div class="md:flex">
                         <div>
                             <div>
                                 <label for="name">Assignment Name</label><br>
@@ -36,7 +36,7 @@
                             @error('note') <span class="text-red-500 error">{{ $message }}</span><br> @enderror
                             <br>                              
                         </div>
-                        <div class="ml-24">
+                        <div class="md:ml-24">
                             <div>
                                 <label for="due_date">Due Date</label><br>
                                 <input type="date" name="due_date" id="due_date" class="block w-48 appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" required>

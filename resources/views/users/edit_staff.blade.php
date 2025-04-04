@@ -9,7 +9,7 @@
                 <form action="{{ route('users.update', $user) }}" method="POST" enctype="multipart/form-data">
                     @method('PUT')
                     @csrf
-                    <div class="flex">
+                    <div class="md:flex">
                         <div>
                             <div>
                                 <label for="name">Full Name</label><br>
@@ -75,7 +75,7 @@
                             @error('status') <span class="text-red-500 error">{{ $message }}</span><br> @enderror
                             <br>
                         </div>
-                        <div class="ml-24">
+                        <div class="md:ml-24">
                             <div>
                                 <label for="type">Select Staff Type</label><br>
                                 <select name="type" id="type" class="block w-96 appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" required onchange="toggleUser()">

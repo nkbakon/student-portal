@@ -8,7 +8,7 @@
                 <h5 class="font-bold text-center text-gray-900 text-xl">New Class</h5><br>                
                 <form action="{{ route('classes.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <div class="flex">
+                    <div class="md:flex">
                         <div>
                             <div>
                                 @php
@@ -31,7 +31,7 @@
                             @error('name') <span class="text-red-500 error">{{ $message }}</span><br> @enderror
                             <br>
                         </div>
-                        <div class="ml-24">
+                        <div class="md:ml-24">
                             <div>
                                 @php
                                     $subjects = App\Models\Subject::all();

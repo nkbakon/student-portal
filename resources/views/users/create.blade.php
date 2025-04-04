@@ -8,7 +8,7 @@
                 <h5 class="font-bold text-center text-gray-900 text-xl">New Student</h5><br>                  
                 <form action="{{ route('users.store') }}" method="POST">
                     @csrf
-                    <div class="flex">
+                    <div class="md:flex">
                         <div>
                             <div>
                                 <label for="name">Full Name</label><br>
@@ -95,7 +95,7 @@
                             @error('confirm_password') <span class="text-red-500 error">{{ $message }}</span><br> @enderror
                             <br>
                         </div>
-                        <div class="ml-24">
+                        <div class="md:ml-24">
                             <div>
                                 <label for="contact">Personal Contact Number</label><br>
                                 <input type="number" name="contact" id="contact" class="block w-96 appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="contact number" required>
