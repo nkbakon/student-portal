@@ -37,6 +37,9 @@ Route::get('classes/{class}/view_assignment', [ClassController::class, 'viewAssi
 Route::get('classes/{class}/view/assignment', [ClassController::class, 'assignment'])->name('classes.assignment');
 Route::put('classes/{class}/view/assignment', [ClassController::class, 'storeAssignment'])->name('classes.assignment_store');
 
+Route::get('classes/{assignment}/submission', [ClassController::class, 'submission'])->name('classes.submission');
+Route::put('classes/{my_submission}/store_submission', [ClassController::class, 'storeSubmission'])->name('classes.storeSubmission');
+
 Route::get('subjects', [SubjectController::class, 'index'])->name('subjects.index');
 Route::post('subjects/store', [SubjectController::class, 'store'])->name('subjects.store'); 
 Route::put('subjects/update', [SubjectController::class, 'update'])->name('subjects.update');

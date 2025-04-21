@@ -4,8 +4,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>Student Portal</title>
-        <link rel="icon" type="image/x-icon" href="{{ asset('assets/favi.png') }}">        
+        <title>NEXTGENEDU</title>
+        <link rel="icon" type="image/x-icon" href="{{ asset('assets/logo.png') }}">        
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
         <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
         <!-- font-awesome icons -->
@@ -17,7 +17,7 @@
             <div class="bg-gray-100 text-gray-500 rounded-3xl shadow-xl w-full overflow-hidden" style="max-width:1000px">
                 <div class="md:flex w-full">
                     <div class="hidden md:flex w-1/2 bg-white py-10 px-10 justify-center">                        
-                        <div class="w-full mt-16">
+                        <div class="w-full mt-8">
                             <div class="flex items-center justify-center">
                                 <img width="150px" height="150px" src="{{ asset('assets/logo.png') }}" alt="logo"/>
                             </div>                            
@@ -25,6 +25,9 @@
                         </div>
                     </div>
                     <div class="w-full md:w-1/2 py-10 px-5 md:px-10">
+                        <div class="flex items-center justify-center md:hidden">
+                            <img width="100px" height="100px" src="{{ asset('assets/logo.png') }}" alt="logo"/>
+                        </div>   
                         <div class="text-center mb-10">                            
                             <h1 class="font-bold text-3xl text-gray-900">SIGN IN</h1>
                             <h1 class="font-bold text-md text-gray-900">OR <a href="{{ route('register') }}" class="text-blue-500">REGISTER</a></h1>

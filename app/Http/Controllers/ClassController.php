@@ -174,4 +174,46 @@ class ClassController extends Controller
         return redirect()->route('classes.view_assignment', ['class' => $class->id])
         ->with('delete', 'Assignment astore failed, try again!');
     }
+
+    public function submission(Assignment $assignment)
+    {
+        $my_submission = null;
+        if(auth()->user()->type == '3'){
+            $student_assignments = StudentAssignment::where('assignment_id', $assignment->id)->where('student_id', auth()->user()->id)->orderBy('id', 'desc')->paginate(25);
+            $my_submission = StudentAssignment::where('assignment_id', $assignment->id)->where('student_id', auth()->user()->id)->first();
+        }else{
+            $student_assignments = StudentAssignment::where('assignment_id', $assignment->id)->orderBy('id', 'desc')->paginate(25);
+        }
+        
+        return view('classes.submission', compact('assignment', 'student_assignments', 'my_submission'));
+    }
+
+    public function storeSubmission(Request $request, StudentAssignment $my_submission)
+    {
+        $request->validate([
+            'submission' => 'required',
+        ]);
+
+        if($my_submission->submission == null){
+            $submission = $request->file('submission');
+            $folderName = 'attachments';        
+            $path = $submission->store($folderName, 'public');
+            $originalFileName = $submission->getClientOriginalName();
+            $my_submission->submission = $path;
+            $my_submission->file_name = $originalFileName;
+            $my_submission->save();
+        }
+
+        $my_submission->status = 2;
+        $my_submission->save();
+
+        $assignment = Assignment::find($my_submission->assignment_id);
+
+        if($my_submission){
+            return redirect()->route('classes.submission', ['assignment' => $assignment->id])
+            ->with('status', 'Submission stored successfully.');        
+        }
+        return redirect()->route('classes.submission', ['assignment' => $assignment->id])
+        ->with('delete', 'Submission store failed, try again!');
+    }
 }
