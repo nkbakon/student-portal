@@ -12,7 +12,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $students = User::where('type', 3)->paginate(25);
+        $students = User::where('type', 3)->orderBy('id', 'desc')->paginate(25);
         return view('users.index', compact('students'));
     }
 
@@ -172,7 +172,7 @@ class UserController extends Controller
 
     public function staff()
     {
-        $staffs = User::where('type', '!=', 3)->paginate(25);
+        $staffs = User::where('type', '!=', 3)->orderBy('id', 'desc')->paginate(25);
         return view('users.staff', compact('staffs'));
     }
 

@@ -132,7 +132,7 @@
                             <br>
                             <div>
                                 <label for="parent_contact2">Parent Contact Number (Optional)</label><br>
-                                <input type="number2" name="parent_contact2" value="{{ $user->parent_contact2 }}" class="block w-96 appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="parent contact number">
+                                <input type="number" name="parent_contact2" value="{{ $user->parent_contact2 }}" class="block w-96 appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="parent contact number">
                             </div>
                             @error('parent_contact2') <span class="text-red-500 error">{{ $message }}</span><br> @enderror
                             <br>

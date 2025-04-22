@@ -43,9 +43,16 @@ class ClassController extends Controller
 
     public function view(TClass $class)
     {
-        $assigns = ClassStudent::where('class_id', $class->id)->orderBy('id', 'desc')->paginate(25);
-        $assigns_count = ClassStudent::where('class_id', $class->id)->count();
-        return view('classes.view', compact('class', 'assigns', 'assigns_count'));
+        if(auth()->user()->type != '3'){
+            $assigns = ClassStudent::where('class_id', $class->id)->orderBy('id', 'desc')->paginate(25);
+            $assigns_count = ClassStudent::where('class_id', $class->id)->count();
+            return view('classes.view', compact('class', 'assigns', 'assigns_count'));
+        }else{
+            $assignments = Assignment::where('class_id', $class->id)->orderBy('id', 'desc')->paginate(25);
+            $assignment_count = Assignment::where('class_id', $class->id)->count();
+            return view('classes.view_assignment', compact('class', 'assignments', 'assignment_count'));
+        }
+        
     }
 
     public function viewAssignment(TClass $class)
@@ -215,5 +222,10 @@ class ClassController extends Controller
         }
         return redirect()->route('classes.submission', ['assignment' => $assignment->id])
         ->with('delete', 'Submission store failed, try again!');
+    }
+
+    public function viewSubmission(StudentAssignment $student_assignment)
+    {        
+        return view('classes.view_submission', compact('student_assignment'));
     }
 }

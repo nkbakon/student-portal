@@ -14,8 +14,13 @@ Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'loginPost'])->name('login.post');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
+Route::get('/forgot_password', [AuthController::class, 'forgot_password'])->name('forgot_password');
+Route::post('/forgot_password', [AuthController::class, 'forgotPasswordPost'])->name('password.post');
+Route::get('/reset_password/{token}/{email}', [AuthController::class, 'resetPassword'])->name('password.recovery');
+Route::post('/reset_password', [AuthController::class, 'resetPasswordPost'])->name('password.resetpost');
+
 Route::get('/register', [AuthController::class, 'register'])->name('register');
-Route::get('/register/phone/check', [AuthController::class, 'phonecheck'])->name('register.phonecheck');
+Route::get('/register/contact/check', [AuthController::class, 'contactcheck'])->name('register.contactcheck');
 Route::post('/register/store', [AuthController::class, 'register_store'])->name('register.store');
 Route::get('/register/email/check', [AuthController::class, 'emailcheck'])->name('site.emailcheck');
 
@@ -39,6 +44,7 @@ Route::put('classes/{class}/view/assignment', [ClassController::class, 'storeAss
 
 Route::get('classes/{assignment}/submission', [ClassController::class, 'submission'])->name('classes.submission');
 Route::put('classes/{my_submission}/store_submission', [ClassController::class, 'storeSubmission'])->name('classes.storeSubmission');
+Route::get('classes/{student_assignment}/viewSubmission', [ClassController::class, 'viewSubmission'])->name('classes.viewSubmission');
 
 Route::get('subjects', [SubjectController::class, 'index'])->name('subjects.index');
 Route::post('subjects/store', [SubjectController::class, 'store'])->name('subjects.store'); 

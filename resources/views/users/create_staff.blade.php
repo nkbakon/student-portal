@@ -67,7 +67,8 @@
                                 <div class="relative w-96">
                                     <input type="password" name="password" id="addpassword" autocomplete="new-password" class="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 pr-10 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="password" required>
                                     <button type="button" id="togglePassword" class="hidden absolute inset-y-0 right-0 flex items-center pr-3 text-gray-600 focus:outline-none">
-                                        <i class="fa-regular fa-eye"></i>
+                                        <img src="{{ asset('assets/eye.svg') }}" id="eye" alt="Eye Icon" class="w-5 h-5">
+                                        <img src="{{ asset('assets/eye-slash.svg') }}" id="eye_slash" style="display:none;" alt="Eye Slash Icon" class="w-5 h-5">
                                     </button>
                                 </div>
                             </div>
@@ -216,15 +217,15 @@
     <script>
         document.getElementById('togglePassword').addEventListener('click', function () {
             const passwordField = document.getElementById('addpassword');
-            const passwordIcon = this.querySelector('i');
+            const passwordIcon = document.getElementById('eye');
             if (passwordField.type === 'password') {
                 passwordField.type = 'text';
-                passwordIcon.classList.remove('fa-eye');
-                passwordIcon.classList.add('fa-eye-slash');
+                $('#eye').hide();
+                $('#eye_slash').show();
             } else {
                 passwordField.type = 'password';
-                passwordIcon.classList.remove('fa-eye-slash');
-                passwordIcon.classList.add('fa-eye');
+                $('#eye').show();
+                $('#eye_slash').hide();
             }
         });
     </script>

@@ -74,22 +74,26 @@
                 </div><br>
                 <div>
                     @if(auth()->user()->type == '3' && $my_submission->status != '2' && $my_submission->status != '3')
-                    <div class="relative inline-block w-full">
-                        <form action="{{ route('classes.storeSubmission', $my_submission) }}" method="POST" enctype="multipart/form-data">
-                            @method('PUT')
-                            @csrf
-                            <label for="" class="text-md font-semibold px-1 text-gray-800 mb-2">My Submission</label>
-                            <div>
+                        @if($assignment->due_date < now()->toDateString() && $my_submission->status == '1')
+                            <h1 class="text-red-700 text-lg font-semibold">Failed to Submit, Deadline Passed!</h1>
+                        @else
+                        <div class="relative inline-block w-full">
+                            <form action="{{ route('classes.storeSubmission', $my_submission) }}" method="POST" enctype="multipart/form-data">
+                                @method('PUT')
+                                @csrf
+                                <label for="" class="text-md font-semibold px-1 text-gray-800 mb-2">My Submission</label>
                                 <div>
-                                    <input type="file" name="submission" class="w-96 ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" required>
-                                </div>
-                                @error('submission') <span class="text-red-500 error mb-2">{{ $message }}</span><br> @enderror
-                                <div>
-                                    <button type="submit" title="submit assignment" class="mt-4 ml-4 inline-flex items-center px-4 py-2 bg-green-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition ease-in-out duration-150">Submit Assignment</button>
-                                </div>
-                            </div>                            
-                        </form>
-                    </div><br><br>
+                                    <div>
+                                        <input type="file" name="submission" class="w-96 ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" required>
+                                    </div>
+                                    @error('submission') <span class="text-red-500 error mb-2">{{ $message }}</span><br> @enderror
+                                    <div>
+                                        <button type="submit" title="submit assignment" class="mt-4 ml-4 inline-flex items-center px-4 py-2 bg-green-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition ease-in-out duration-150">Submit Assignment</button>
+                                    </div>
+                                </div>                            
+                            </form>
+                        </div><br><br>
+                        @endif
                     @endif
                     @if(sizeof($student_assignments) > 0)
                     <div class="overflow-x-auto">
@@ -132,8 +136,10 @@
                                         @endif
                                     </td>
                                     <td class="py-3 px-6">
-                                        <a href="{{ route('classes.submission', $assignment) }}" title="view" class="inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500 active:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition ease-in-out duration-150"><img src="{{ asset('assets/folder_open.svg') }}" alt="View Icon" class="w-3 h-3"></a>
-                                        <button type="button" value="{{ $assignment->id }}" data-modal-toggle="deletePost" class="deleteBtn inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150"><img src="{{ asset('assets/trash.svg') }}" alt="Delete Icon" class="w-3 h-3"></button>                                        
+                                        <a href="{{ route('classes.viewSubmission', $student_assignment) }}" title="view" class="inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500 active:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition ease-in-out duration-150"><img src="{{ asset('assets/folder_open.svg') }}" alt="View Icon" class="w-3 h-3"></a>
+                                        @if(auth()->user()->type != '3')
+                                        <button type="button" value="{{ $student_assignment->id }}" data-modal-toggle="deletePost" class="deleteBtn inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150"><img src="{{ asset('assets/trash.svg') }}" alt="Delete Icon" class="w-3 h-3"></button>                                        
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach
