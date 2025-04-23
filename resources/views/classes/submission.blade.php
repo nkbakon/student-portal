@@ -119,10 +119,14 @@
                                 @foreach($student_assignments as $student_assignment)
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                     <td class="py-3 px-6">
+                                    @if(isset($student_assignment->student))
                                         {{ $student_assignment->student->name }}
+                                    @endif
                                     </td>
                                     <td class="py-3 px-6">
+                                    @if(isset($student_assignment->student))
                                         {{ $student_assignment->student->email }}
+                                    @endif
                                     </td>
                                     <td class="py-3 px-6">
                                         @if($student_assignment->status == 1)

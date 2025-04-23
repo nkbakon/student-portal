@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\AuthController;
 use \App\Http\Controllers\ClassController;
+use \App\Http\Controllers\PaymentController;
 use \App\Http\Controllers\SubjectController;
 use \App\Http\Controllers\UserController;
 
@@ -59,6 +60,14 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('subjects/store', [SubjectController::class, 'store'])->name('subjects.store'); 
     Route::put('subjects/update', [SubjectController::class, 'update'])->name('subjects.update');
     Route::delete('subjects/destroy', [SubjectController::class, 'destroy'])->name('subjects.destroy');
+
+    Route::get('payments', [PaymentController::class, 'index'])->name('payments.index');
+    Route::get('payments/create', [PaymentController::class, 'create'])->name('payments.create');
+    Route::post('payments/store', [PaymentController::class, 'store'])->name('payments.store');
+    Route::get('payments/{payment}/edit', [PaymentController::class, 'edit'])->name('payments.edit');
+    Route::put('payments/{payment}/update', [PaymentController::class, 'update'])->name('payments.update');
+    Route::delete('payments/destroy', [PaymentController::class, 'destroy'])->name('payments.destroy');
+    Route::get('payments/{payment}/view', [PaymentController::class, 'view'])->name('payments.view');
 
     Route::get('users/create/students', [UserController::class, 'create'])->name('users.create');
     Route::get('users/create/staff', [UserController::class, 'create_staff'])->name('users.create_staff');

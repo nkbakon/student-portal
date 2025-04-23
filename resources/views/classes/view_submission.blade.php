@@ -24,9 +24,9 @@
                 <a href="{{ route('classes.submission', $student_assignment->assignment) }}" title="back" class="inline-flex items-center px-4 py-2 bg-gray-700 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-900 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition ease-in-out duration-150" ><i class="fa-solid fa-arrow-left-long"></i></a><br><br>
                 <br>
                 <h1 class="text-center text-xl text-gray-700">Submission</h1>
-                <p class="text-left text-xl text-gray-700 font-bold">Student: {{ $student_assignment->student->name }}</p><br>
+                <p class="text-left text-xl text-gray-700 font-bold">Student:  @if(isset($student_assignment->student)) {{ $student_assignment->student->name }} @endif</p><br>
                 <div class="py-5 bg-gray-200 px-5 rounded-lg">
-                    <p class="text-base font-bold text-gray-700">Email: {{ $student_assignment->student->email }}</p>
+                    <p class="text-base font-bold text-gray-700">Email: @if(isset($student_assignment->student)) {{ $student_assignment->student->email }} @endif</p>
                     <p class="text-gray-700">Status: 
                         @if($student_assignment->status == 1)
                         <span class="bg-gradient-to-tl from-yellow-600 to-yellow-400 px-2 text-xs rounded py-1 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white">Pending</span>

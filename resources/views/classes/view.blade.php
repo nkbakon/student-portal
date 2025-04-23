@@ -26,8 +26,8 @@
                 <h1 class="text-center text-xl text-gray-700">Class Details</h1>
                 <p class="text-left text-xl text-gray-700 font-bold">{{ $class->name }}</p><br>
                 <div class="py-5 bg-gray-200 px-5 rounded-lg">
-                    <p class="text-base font-bold text-gray-700">Teacher: {{ $class->teacher->name }}</p>
-                    <p class="text-gray-700">Subject: {{ $class->subject->name }}</p> 
+                    <p class="text-base font-bold text-gray-700">Teacher: @if(isset($class->teacher)) {{ $class->teacher->name }} @endif</p>
+                    <p class="text-gray-700">Subject: @if(isset($class->subject)) {{ $class->subject->name }} @endif</p> 
                 </div><br>
                 <nav class="bg-gray-200 dark:bg-gray-700">
                     <div class="max-w-screen-xl px-4 py-3 mx-auto md:px-6 flex justify-center">
@@ -100,16 +100,24 @@
                                 @foreach($assigns as $assign)
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">                                    
                                     <td class="py-3 px-6">
+                                    @if(isset($assign->student))
                                         {{ $assign->student->id }}
+                                    @endif
                                     </td>
                                     <td class="py-3 px-6">
+                                    @if(isset($assign->student))
                                         {{ $assign->student->name }}
+                                    @endif
                                     </td>
                                     <td class="py-3 px-6">
+                                    @if(isset($assign->student))
                                         {{ $assign->student->email }}
+                                    @endif
                                     </td>
                                     <td class="py-3 px-6">
+                                    @if(isset($assign->student))
                                         {{ $assign->student->contact }}
+                                    @endif
                                     </td>
                                     <td class="py-3 px-6">
                                         <a href="{{ route('classes.viewAssign', $assign) }}" title="view" class="inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500 active:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition ease-in-out duration-150"><img src="{{ asset('assets/folder_open.svg') }}" alt="View Icon" class="w-3 h-3"></a>

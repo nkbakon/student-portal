@@ -46,6 +46,10 @@
                                 <img src="{{ asset('assets/subject.svg') }}" alt="Subject Icon" class="w-5 h-5">
                                 <span class="font-semibold">Subjects</span>
                             </li></a>
+                            <a href="{{ route('payments.index') }}"><li class="{{ (request()->segment(1) == 'payments') ? 'bg-blue-900 border-blue-900': '' }} px-3 py-1 flex space-x-2 mt-4 rounded-md border-blue-800 cursor-pointer hover:bg-blue-900 hover:border-blue-900">					
+                                <img src="{{ asset('assets/payment.svg') }}" alt="Payments Icon" class="w-5 h-5">
+                                <span class="font-semibold">Payments</span>
+                            </li></a>
                             @endif
                             <a href="{{ route('profile.index') }}"><li class="{{ (request()->segment(1) == 'profile') ? 'bg-blue-900 border-blue-900': '' }} px-3 py-1 flex space-x-2 mt-4 rounded-md border-blue-800 cursor-pointer hover:bg-blue-900 hover:border-blue-900">					
                                 <img src="{{ asset('assets/profile.svg') }}" alt="Profile Icon" class="w-5 h-5">
@@ -81,7 +85,7 @@
                                 <ul>
                                     <div class="flex items-center justify-center">
                                         <a href="{{ route('dashboard') }}"><li class="">					
-                                            <img class="justify-center" width="125px" height="125px" src="{{ asset('assets/logo.png') }}" alt="logo"/>
+                                            <img class="justify-center" width="100px" height="100px" src="{{ asset('assets/logo.png') }}" alt="logo"/>
                                         </li></a>
                                     </div>                            
                                     <a href="{{ route('dashboard') }}"><li class="{{ (request()->segment(1) == 'dashboard') ? 'bg-blue-900 border-blue-900': '' }} px-3 py-1 flex space-x-2 mt-10 rounded-md border-blue-800 cursor-pointer hover:bg-blue-900 hover:border-blue-900">					
@@ -96,6 +100,10 @@
                                     <a href="{{ route('subjects.index') }}"><li class="{{ (request()->segment(1) == 'subjects') ? 'bg-blue-900 border-blue-900': '' }} px-3 py-1 flex space-x-2 mt-4 rounded-md border-blue-800 cursor-pointer hover:bg-blue-900 hover:border-blue-900">					
                                         <img src="{{ asset('assets/subject.svg') }}" alt="Subject Icon" class="w-5 h-5">
                                         <span class="font-semibold">Subjects</span>
+                                    </li></a>
+                                    <a href="{{ route('payments.index') }}"><li class="{{ (request()->segment(1) == 'payments') ? 'bg-blue-900 border-blue-900': '' }} px-3 py-1 flex space-x-2 mt-4 rounded-md border-blue-800 cursor-pointer hover:bg-blue-900 hover:border-blue-900">					
+                                        <img src="{{ asset('assets/payment.svg') }}" alt="Payments Icon" class="w-5 h-5">
+                                        <span class="font-semibold">Payments</span>
                                     </li></a>
                                     @endif
                                     <a href="{{ route('profile.index') }}"><li class="{{ (request()->segment(1) == 'profile') ? 'bg-blue-900 border-blue-900': '' }} px-3 py-1 flex space-x-2 mt-4 rounded-md border-blue-800 cursor-pointer hover:bg-blue-900 hover:border-blue-900">					

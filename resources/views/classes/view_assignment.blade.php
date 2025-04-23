@@ -26,8 +26,8 @@
                 <h1 class="text-center text-xl text-gray-700">Class Details</h1>
                 <p class="text-left text-xl text-gray-700 font-bold">{{ $class->name }}</p><br>
                 <div class="py-5 bg-gray-200 px-5 rounded-lg">
-                    <p class="text-base font-bold text-gray-700">Teacher: {{ $class->teacher->name }}</p>
-                    <p class="text-gray-700">Subject: {{ $class->subject->name }}</p> 
+                    <p class="text-base font-bold text-gray-700">Teacher: @if(isset($class->teacher)) {{ $class->teacher->name }} @endif</p>
+                    <p class="text-gray-700">Subject: @if(isset($class->subject)) {{ $class->subject->name }} @endif</p> 
                 </div><br>
                 @if(auth()->user()->type != '3')
                 <nav class="bg-gray-200 dark:bg-gray-700">
