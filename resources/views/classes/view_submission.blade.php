@@ -79,15 +79,25 @@
                 <div>
                     @if(auth()->user()->type != '3')
                         <div class="relative inline-block w-full">
-                            <form action="{{ route('classes.storeSubmission', $student_assignment) }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('classes.checkSubmission', $student_assignment) }}" method="POST" enctype="multipart/form-data">
                                 @method('PUT')
                                 @csrf
-                                <label for="" class="text-md font-semibold px-1 text-gray-800 mb-2">Check Submission</label>
-                                <div>
+                                <label for="" class="text-md font-semibold px-1 text-gray-800 mb-4">Check Submission</label>
+                                <div class="mt-2">
                                     <div>
-                                        <input type="file" name="submission" class="w-96 ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" required>
+                                        <label for="comment">Teacher's Comment</label><br>
+                                        <textarea name="comment" id="comment" class="block w-96 appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="comment..."></textarea>
                                     </div>
-                                    @error('submission') <span class="text-red-500 error mb-2">{{ $message }}</span><br> @enderror
+                                    @error('comment') <span class="text-red-500 error mb-2">{{ $message }}</span><br> @enderror
+                                    <div>
+                                        <label for="status">Status</label><br>
+                                        <select name="status" class="block w-96 appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" required>
+                                            <option value="" disabled selected>Select a status from here</option>
+                                            <option value="3">Complete</option>
+                                            <option value="4">Request Modification</option>
+                                        </select> 
+                                    </div>
+                                    @error('status') <span class="text-red-500 error mb-2">{{ $message }}</span><br> @enderror
                                     <div>
                                         <button type="submit" title="mark checked" class="mt-4 ml-4 inline-flex items-center px-4 py-2 bg-green-500 border border-transparent rounded-md font-semibold text-xs text-white tracking-widest hover:bg-green-600 active:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition ease-in-out duration-150">Mark Checked</button>
                                     </div>

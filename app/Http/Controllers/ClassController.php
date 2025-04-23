@@ -7,6 +7,9 @@ use App\Models\Assignment;
 use App\Models\StudentAssignment;
 use App\Models\TClass;
 use App\Models\ClassStudent;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class ClassController extends Controller
 {
@@ -97,6 +100,12 @@ class ClassController extends Controller
         }    
     }
 
+    public function viewAssign(ClassStudent $assign)
+    {
+        $class = TClass::find($assign->class_id);
+        return view('classes.view_assign', compact('class', 'assign'));        
+    }
+
     public function edit(TClass $class)
     {
         return view('classes.edit', compact('class'));
@@ -182,6 +191,77 @@ class ClassController extends Controller
         ->with('delete', 'Assignment astore failed, try again!');
     }
 
+    public function edit_assignment(Assignment $assignment)
+    {
+        return view('classes.edit_assignment', compact('assignment'));
+    }
+
+    public function update_assignment(Request $request, Assignment $assignment)
+    {
+        $request->validate([
+            'name' => 'required',
+        ]);
+
+        $assignment->name = $request->name;
+        $assignment->due_date = $request->due_date;
+        $assignment->zoom = $request->zoom;
+        $assignment->whatsapp = $request->whatsapp;
+        $assignment->youtube = $request->youtube;
+        $assignment->note = $request->note;
+        $assignment->save();
+
+        if($request->hasFile('update_attachment')) {
+            if($assignment->attachment != null){
+                Storage::disk('public')->delete($assignment->attachment);
+                $assignment->attachment = null;
+                $assignment->file_name = null;
+                $assignment->save();
+            }
+        
+            $update_attachment = $request->file('update_attachment');
+            $folderName = 'attachments';        
+            $path_attachment = $update_attachment->store($folderName, 'public');
+            $originalFileName = $update_attachment->getClientOriginalName();
+    
+            $assignment->attachment = $path_attachment;
+            $assignment->file_name = $originalFileName;
+            $assignment->save();
+
+        }elseif(!$request->hasFile('update_attachment') && $request->attachments_remove == "1"){
+            if($assignment->attachment != null){
+                Storage::disk('public')->delete($assignment->attachment);
+                $assignment->attachment = null;
+                $assignment->file_name = null;
+                $assignment->save();
+            }
+        }
+        
+        return redirect()->route('classes.view_assignment', ['class' => $assignment->class->id])
+            ->with('success', 'Assignment updated successfully.'); 
+    }
+
+    public function destroyAssignment(Request $request, TClass $class)
+    {
+        $assignment = Assignment::find($request->data_id);
+        if($assignment)
+        {
+            if($assignment->attachment != null){
+                $attachment = $assignment->attachment;
+                Storage::disk('public')->delete($attachment);
+            }
+
+            $assignment->delete();
+            
+            return redirect()->route('classes.view_assignment', ['class' => $class->id])
+            ->with('delete', 'Assignment deleted successfully.!'); 
+        }
+        else
+        {
+            return redirect()->route('classes.view_assignment', ['class' => $class->id])
+            ->with('delete', 'No assignment found!'); 
+        }    
+    }
+
     public function submission(Assignment $assignment)
     {
         $my_submission = null;
@@ -200,6 +280,14 @@ class ClassController extends Controller
         $request->validate([
             'submission' => 'required',
         ]);
+
+        if($my_submission->submission != null){
+            $attachment = $my_submission->submission;
+            Storage::disk('public')->delete($attachment);
+            $my_submission->submission = null;
+            $my_submission->file_name = null;
+            $my_submission->save();
+        }
 
         if($my_submission->submission == null){
             $submission = $request->file('submission');
@@ -224,8 +312,50 @@ class ClassController extends Controller
         ->with('delete', 'Submission store failed, try again!');
     }
 
+    public function destroySubmission(Request $request, Assignment $assignment)
+    {
+        $my_submission = StudentAssignment::find($request->data_id);
+        if($my_submission)
+        {
+            if($my_submission->submission != null){
+                $attachment = $my_submission->submission;
+                Storage::disk('public')->delete($attachment);
+            }
+
+            $my_submission->delete();
+            
+            return redirect()->route('classes.submission', ['assignment' => $assignment->id])
+            ->with('delete', 'Submission deleted successfully.!'); 
+        }
+        else
+        {
+            return redirect()->route('classes.submission', ['assignment' => $assignment->id])
+            ->with('delete', 'No submission found!'); 
+        }    
+    }
+
     public function viewSubmission(StudentAssignment $student_assignment)
     {        
         return view('classes.view_submission', compact('student_assignment'));
+    }
+
+    public function checkSubmission(Request $request, StudentAssignment $student_assignment)
+    {
+        $request->validate([
+            'status' => 'required',
+        ]);
+        
+        $student_assignment->comment = $request->comment;
+        $student_assignment->status = $request->status;
+        $student_assignment->save();
+
+        $assignment = Assignment::find($student_assignment->assignment_id);
+
+        if($student_assignment){
+            return redirect()->route('classes.submission', ['assignment' => $assignment->id])
+            ->with('success', 'Submission checked successfully.');        
+        }
+        return redirect()->route('classes.submission', ['assignment' => $assignment->id])
+        ->with('delete', 'Submission check failed, try again!');
     }
 }

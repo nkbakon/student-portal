@@ -24,45 +24,56 @@ Route::get('/register/contact/check', [AuthController::class, 'contactcheck'])->
 Route::post('/register/store', [AuthController::class, 'register_store'])->name('register.store');
 Route::get('/register/email/check', [AuthController::class, 'emailcheck'])->name('site.emailcheck');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::group(['middleware' => ['auth']], function() {
+    
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 
-Route::get('classes', [ClassController::class, 'index'])->name('classes.index'); 
-Route::get('classes/create', [ClassController::class, 'create'])->name('classes.create');
-Route::post('classes/store', [ClassController::class, 'store'])->name('classes.store');
-Route::get('classes/{class}/edit', [ClassController::class, 'edit'])->name('classes.edit');
-Route::put('classes/{class}/update', [ClassController::class, 'update'])->name('classes.update');
-Route::delete('classes/destroy', [ClassController::class, 'destroy'])->name('classes.destroy');
-Route::get('classes/{class}/view', [ClassController::class, 'view'])->name('classes.view');
-Route::put('classes/{class}/view/assign', [ClassController::class, 'assign'])->name('classes.assign');
-Route::delete('classes/{class}/view/assign/destroy', [ClassController::class, 'destroyAssign'])->name('classes.destroyAssign');
+    Route::get('classes', [ClassController::class, 'index'])->name('classes.index'); 
+    Route::get('classes/create', [ClassController::class, 'create'])->name('classes.create');
+    Route::post('classes/store', [ClassController::class, 'store'])->name('classes.store');
+    Route::get('classes/{class}/edit', [ClassController::class, 'edit'])->name('classes.edit');
+    Route::put('classes/{class}/update', [ClassController::class, 'update'])->name('classes.update');
+    Route::delete('classes/destroy', [ClassController::class, 'destroy'])->name('classes.destroy');
+    Route::get('classes/{class}/view', [ClassController::class, 'view'])->name('classes.view');
 
-Route::get('classes/{class}/view_assignment', [ClassController::class, 'viewAssignment'])->name('classes.view_assignment');
-Route::get('classes/{class}/view/assignment', [ClassController::class, 'assignment'])->name('classes.assignment');
-Route::put('classes/{class}/view/assignment', [ClassController::class, 'storeAssignment'])->name('classes.assignment_store');
+    Route::put('classes/{class}/view/assign', [ClassController::class, 'assign'])->name('classes.assign');
+    Route::delete('classes/{class}/view/assign/destroy', [ClassController::class, 'destroyAssign'])->name('classes.destroyAssign');
+    Route::get('classes/{assign}/view_assign', [ClassController::class, 'viewAssign'])->name('classes.viewAssign');
 
-Route::get('classes/{assignment}/submission', [ClassController::class, 'submission'])->name('classes.submission');
-Route::put('classes/{my_submission}/store_submission', [ClassController::class, 'storeSubmission'])->name('classes.storeSubmission');
-Route::get('classes/{student_assignment}/viewSubmission', [ClassController::class, 'viewSubmission'])->name('classes.viewSubmission');
+    Route::get('classes/{class}/view_assignment', [ClassController::class, 'viewAssignment'])->name('classes.view_assignment');
+    Route::get('classes/{class}/view/assignment', [ClassController::class, 'assignment'])->name('classes.assignment');
+    Route::put('classes/{class}/view/assignment', [ClassController::class, 'storeAssignment'])->name('classes.assignment_store');
+    Route::get('classes/{assignment}/edit_assignment', [ClassController::class, 'edit_assignment'])->name('classes.edit_assignment');
+    Route::put('classes/{assignment}/update_assignment', [ClassController::class, 'update_assignment'])->name('classes.update_assignment');
+    Route::delete('classes/{class}/view/assignment/destroy', [ClassController::class, 'destroyAssignment'])->name('classes.destroyAssignment');
 
-Route::get('subjects', [SubjectController::class, 'index'])->name('subjects.index');
-Route::post('subjects/store', [SubjectController::class, 'store'])->name('subjects.store'); 
-Route::put('subjects/update', [SubjectController::class, 'update'])->name('subjects.update');
-Route::delete('subjects/destroy', [SubjectController::class, 'destroy'])->name('subjects.destroy');
+    Route::get('classes/{assignment}/submission', [ClassController::class, 'submission'])->name('classes.submission');
+    Route::put('classes/{my_submission}/store_submission', [ClassController::class, 'storeSubmission'])->name('classes.storeSubmission');
+    Route::get('classes/{student_assignment}/viewSubmission', [ClassController::class, 'viewSubmission'])->name('classes.viewSubmission');
+    Route::delete('classes/{assignment}/submission/destroy', [ClassController::class, 'destroySubmission'])->name('classes.destroySubmission');
+    Route::put('classes/{student_assignment}/check_submission', [ClassController::class, 'checkSubmission'])->name('classes.checkSubmission');
 
-Route::get('users/create/students', [UserController::class, 'create'])->name('users.create');
-Route::get('users/create/staff', [UserController::class, 'create_staff'])->name('users.create_staff');
-Route::post('users/store', [UserController::class, 'store'])->name('users.store');
-Route::get('/users/email/check', [UserController::class, 'emailcheck'])->name('users.emailcheck');
-Route::get('/users/contact/check', [UserController::class, 'contactcheck'])->name('users.contactcheck');
-Route::get('users/students', [UserController::class, 'index'])->name('users.index'); 
-Route::get('users/staff', [UserController::class, 'staff'])->name('users.staff');        
-Route::get('users/edit/{user}/students', [UserController::class, 'edit'])->name('users.edit');
-Route::put('users/update/{user}', [UserController::class, 'update'])->name('users.update');
-Route::delete('users/destroy', [UserController::class, 'destroy'])->name('users.destroy');
+    Route::get('subjects', [SubjectController::class, 'index'])->name('subjects.index');
+    Route::post('subjects/store', [SubjectController::class, 'store'])->name('subjects.store'); 
+    Route::put('subjects/update', [SubjectController::class, 'update'])->name('subjects.update');
+    Route::delete('subjects/destroy', [SubjectController::class, 'destroy'])->name('subjects.destroy');
 
-Route::get('/profile', function () {
-    return view('profile.index');
-})->name('profile.index');
-Route::put('/profile', [AuthController::class, 'update'])->name('password.update');
+    Route::get('users/create/students', [UserController::class, 'create'])->name('users.create');
+    Route::get('users/create/staff', [UserController::class, 'create_staff'])->name('users.create_staff');
+    Route::post('users/store', [UserController::class, 'store'])->name('users.store');
+    Route::get('/users/email/check', [UserController::class, 'emailcheck'])->name('users.emailcheck');
+    Route::get('/users/contact/check', [UserController::class, 'contactcheck'])->name('users.contactcheck');
+    Route::get('users/students', [UserController::class, 'index'])->name('users.index'); 
+    Route::get('users/staff', [UserController::class, 'staff'])->name('users.staff');        
+    Route::get('users/edit/{user}/students', [UserController::class, 'edit'])->name('users.edit');
+    Route::put('users/update/{user}', [UserController::class, 'update'])->name('users.update');
+    Route::delete('users/destroy', [UserController::class, 'destroy'])->name('users.destroy');
+
+    Route::get('/profile', function () {
+        return view('profile.index');
+    })->name('profile.index');
+    Route::put('/profile', [AuthController::class, 'update'])->name('password.update');
+
+});
