@@ -45,7 +45,15 @@
                 </nav><br>
                 <div id="student_section">
                     @php
-                        $students = App\Models\User::where('type', 3)->where('status', 1)->get();
+                        use App\Models\User;
+                        use App\Models\StudentSubject;
+
+                        $studentIds = StudentSubject::where('subject_id', $class->subject_id)->pluck('student_id');
+
+                        $students = User::where('type', 3)
+                            ->where('status', 1)
+                            ->whereIn('id', $studentIds)
+                            ->get();
                     @endphp
                     <div class="relative inline-block w-full">
                         <form action="{{ route('classes.assign', $class) }}" method="POST" enctype="multipart/form-data">

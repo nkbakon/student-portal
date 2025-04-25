@@ -32,6 +32,17 @@ class AuthController extends Controller
 
         $usercheck = User::where('email', $request->email)->first();
         if(isset($usercheck)){
+            if (
+                $usercheck->type == 3 &&
+                $usercheck->last_payment_date !== null &&
+                Carbon::parse($usercheck->last_payment_date)->format('Y-m') !== now()->format('Y-m') &&
+                now()->day > env('PAYMENT_DEADLINE')
+            ) {
+                $usercheck->status = 2;
+                $usercheck->save();
+                return redirect()->route('login')->with('delete', 'Your account is deactivated, please contact Admin.');
+            }
+
             if($usercheck->status == '1'){
                 $credentials = $request->only('email', 'password');
                 if(Auth::attempt($credentials)){

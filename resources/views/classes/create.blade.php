@@ -15,7 +15,7 @@
                                     $teachers = App\Models\User::where('type', 2)->where('status', 1)->get();
                                 @endphp
                                 <label for="teacher_id">Teacher</label><br>
-                                <select name="teacher_id" class="block w-96 appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" required>
+                                <select name="teacher_id" id="teacher_id" class="block w-96 appearance-none rounded-md border border-gray-300 px-3 py-2" required>
                                     <option value="" disabled selected>Select a teacher from here</option>
                                     @foreach($teachers as $teacher)
                                     <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
@@ -33,15 +33,9 @@
                         </div>
                         <div class="md:ml-24">
                             <div>
-                                @php
-                                    $subjects = App\Models\Subject::all();
-                                @endphp
                                 <label for="subject_id">Subject</label><br>
-                                <select name="subject_id" class="block w-96 appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" required>
+                                <select name="subject_id" id="subject_id" class="disabled:opacity-25 block w-96 appearance-none rounded-md border border-gray-300 px-3 py-2" disabled required>
                                     <option value="" disabled selected>Select a subject from here</option>
-                                    @foreach($subjects as $subject)
-                                    <option value="{{ $subject->id }}">{{ $subject->name }}</option>
-                                    @endforeach
                                 </select> 
                             </div>
                             @error('subject_id') <span class="text-red-500 error">{{ $message }}</span><br> @enderror
@@ -55,3 +49,27 @@
     </div>
 </div>
 @endsection
+
+@push('js')
+<script>
+    document.getElementById('teacher_id').addEventListener('change', function () {
+        const teacherId = this.value;
+        const subjectSelect = document.getElementById('subject_id');
+        subjectSelect.innerHTML = '<option value="" disabled selected>Loading...</option>';
+        subjectSelect.disabled = true;
+
+        fetch(`/get-subjects-by-teacher/${teacherId}`)
+            .then(response => response.json())
+            .then(data => {
+                subjectSelect.innerHTML = '<option value="" disabled selected>Select a subject from here</option>';
+                data.forEach(subject => {
+                    const option = document.createElement('option');
+                    option.value = subject.id;
+                    option.textContent = subject.name;
+                    subjectSelect.appendChild(option);
+                });
+                subjectSelect.disabled = false;
+            });
+    });
+</script>
+@endpush

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\AuthController;
+use \App\Http\Controllers\CashOutController;
 use \App\Http\Controllers\ClassController;
 use \App\Http\Controllers\PaymentController;
 use \App\Http\Controllers\SubjectController;
@@ -39,6 +40,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::delete('classes/destroy', [ClassController::class, 'destroy'])->name('classes.destroy');
     Route::get('classes/{class}/view', [ClassController::class, 'view'])->name('classes.view');
 
+    Route::get('/get-subjects-by-teacher/{teacherId}', [ClassController::class, 'getSubjectsByTeacher']);
+
     Route::put('classes/{class}/view/assign', [ClassController::class, 'assign'])->name('classes.assign');
     Route::delete('classes/{class}/view/assign/destroy', [ClassController::class, 'destroyAssign'])->name('classes.destroyAssign');
     Route::get('classes/{assign}/view_assign', [ClassController::class, 'viewAssign'])->name('classes.viewAssign');
@@ -68,6 +71,14 @@ Route::group(['middleware' => ['auth']], function() {
     Route::put('payments/{payment}/update', [PaymentController::class, 'update'])->name('payments.update');
     Route::delete('payments/destroy', [PaymentController::class, 'destroy'])->name('payments.destroy');
     Route::get('payments/{payment}/view', [PaymentController::class, 'view'])->name('payments.view');
+
+    Route::get('cashouts', [CashOutController::class, 'index'])->name('cashouts.index');
+    Route::get('cashouts/create', [CashOutController::class, 'create'])->name('cashouts.create');
+    Route::post('cashouts/store', [CashOutController::class, 'store'])->name('cashouts.store');
+    Route::get('cashouts/{cashout}/edit', [CashOutController::class, 'edit'])->name('cashouts.edit');
+    Route::put('cashouts/{cashout}/update', [CashOutController::class, 'update'])->name('cashouts.update');
+    Route::delete('cashouts/destroy', [CashOutController::class, 'destroy'])->name('cashouts.destroy');
+    Route::get('cashouts/{cashout}/view', [CashOutController::class, 'view'])->name('cashouts.view');
 
     Route::get('users/create/students', [UserController::class, 'create'])->name('users.create');
     Route::get('users/create/staff', [UserController::class, 'create_staff'])->name('users.create_staff');

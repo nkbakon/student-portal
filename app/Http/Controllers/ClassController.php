@@ -7,6 +7,8 @@ use App\Models\Assignment;
 use App\Models\StudentAssignment;
 use App\Models\TClass;
 use App\Models\ClassStudent;
+use App\Models\TeacherSubject;
+use App\Models\Subject;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -22,6 +24,14 @@ class ClassController extends Controller
     public function create()
     {
         return view('classes.create');
+    }
+
+    public function getSubjectsByTeacher($teacherId)
+    {
+        $subjectIds = TeacherSubject::where('teacher_id', $teacherId)->pluck('subject_id');
+        $subjects = Subject::whereIn('id', $subjectIds)->get();
+
+        return response()->json($subjects);
     }
 
     public function store(Request $request)
