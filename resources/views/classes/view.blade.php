@@ -55,6 +55,7 @@
                             ->whereIn('id', $studentIds)
                             ->get();
                     @endphp
+                    @if(auth()->user()->type == '1')
                     <div class="relative inline-block w-full">
                         <form action="{{ route('classes.assign', $class) }}" method="POST" enctype="multipart/form-data">
                             @method('PUT')
@@ -81,6 +82,7 @@
                             @error('student_id') <span class="text-red-500 error mb-2">{{ $message }}</span><br> @enderror
                         </form>
                     </div><br><br>
+                    @endif
                     @if($assigns_count > 0)
                     <div class="overflow-x-auto">
                         <h1 class="text-center text-xl text-gray-700">Students</h1>
@@ -129,7 +131,9 @@
                                     </td>
                                     <td class="py-3 px-6">
                                         <a href="{{ route('classes.viewAssign', $assign) }}" title="view" class="inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500 active:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition ease-in-out duration-150"><img src="{{ asset('assets/folder_open.svg') }}" alt="View Icon" class="w-3 h-3"></a>
+                                        @if(auth()->user()->type == '1')
                                         <button type="button" value="{{ $assign->id }}" data-modal-toggle="deletePost" class="deleteBtn inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150"><img src="{{ asset('assets/trash.svg') }}" alt="Delete Icon" class="w-3 h-3"></button>                                        
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach

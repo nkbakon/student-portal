@@ -69,6 +69,7 @@
             </div>
           </div>
         </a>
+        <div class="block md:hidden"><br></div>
         <a href="{{ route('users.index') }}">
           <div class="justify-center inline-flex bg-gray-200 rounded-2xl overflow-hidden shadow-lg" style="width:320px; height:128px;">
             <div class="px-6 py-4 text-center">                      
@@ -121,6 +122,75 @@
         </div>
       </div><br>
       @endif
+      @if(auth()->user()->type == 3)
+      <div class="md:flex md:space-x-40">
+        <a href="{{ route('classes.index') }}">
+          <div class="justify-center inline-flex bg-gray-200 rounded-2xl overflow-hidden shadow-lg" style="width:320px; height:128px;">
+            <div class="px-6 py-4 text-center">                        
+              <p class="text-gray-500">
+                Pending Assignments
+              </p>
+              <div class="font-bold text-5xl text-yellow-400">
+                {{ App\Models\StudentAssignment::where('student_id', auth()->user()->id)->where('status', 1)->count() }}
+              </div>
+              <span class="text-gray-500 text-sm">(No. of Assignments)</span>
+            </div>
+          </div>
+        </a>
+        <div class="block md:hidden"><br></div>
+        <a href="{{ route('classes.index') }}">
+          <div class="justify-center inline-flex bg-gray-200 rounded-2xl overflow-hidden shadow-lg" style="width:320px; height:128px;">
+            <div class="px-6 py-4 text-center">                      
+              <p class="text-gray-500">
+                Delivered Assignments
+              </p>
+              <div class="font-bold text-5xl text-blue-700">
+                {{ App\Models\StudentAssignment::where('student_id', auth()->user()->id)->where('status', 2)->count() }}
+              </div>
+              <span class="text-gray-500 text-sm">(No. of Assignments)</span>
+            </div>
+          </div>
+        </a>
+      </div><br>
+      <div class="md:flex md:space-x-40">
+        <a href="{{ route('classes.index') }}">
+          <div class="justify-center inline-flex bg-gray-200 rounded-2xl overflow-hidden shadow-lg" style="width:320px; height:128px;">
+            <div class="px-6 py-4 text-center">                        
+              <p class="text-gray-500">
+                Completed Assignments
+              </p>
+              <div class="font-bold text-5xl text-green-500">
+                {{ App\Models\StudentAssignment::where('student_id', auth()->user()->id)->where('status', 3)->count() }}
+              </div>
+              <span class="text-gray-500 text-sm">(No. of Assignments)</span>
+            </div>
+          </div>
+        </a>
+        <div class="block md:hidden"><br></div>
+        <a href="{{ route('classes.index') }}">
+          <div class="justify-center inline-flex bg-gray-200 rounded-2xl overflow-hidden shadow-lg" style="width:320px; height:128px;">
+            <div class="px-6 py-4 text-center">                      
+              <p class="text-gray-500">
+                Modification Requested Assignments
+              </p>
+              <div class="font-bold text-5xl text-red-700">
+                {{ App\Models\StudentAssignment::where('student_id', auth()->user()->id)->where('status', 4)->count() }}
+              </div>
+              <span class="text-gray-500 text-sm">(No. of Assignments)</span>
+            </div>
+          </div>
+        </a>
+      </div><br>
+      <div class="py-6">
+        <div class="px-6 lg:px-8">
+          <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg sm:px-24 lg:px-26">
+            <div class="chart">
+              <canvas class="inline-flex" id="assignmentPieChart" width="400" height="300"></canvas>
+            </div>  
+          </div>
+        </div>
+      </div><br>
+      @endif
     </div>        
   </div>
 </div>
@@ -152,6 +222,7 @@
     }
   ?>
 
+  @if(auth()->user()->type != 3)
   var ctx = document.getElementById("mnthincomeChart").getContext("2d");
 
   new Chart(ctx, {
@@ -403,5 +474,37 @@
       },
     },
   });
+
+  @else
+  var ctx3 = document.getElementById("assignmentPieChart").getContext("2d");
+
+  new Chart(ctx3, {
+    type: "pie",
+    data: {
+      labels: [
+        'Pending',
+        'Delivered',
+        'Completed',
+        'Modification Requested'
+      ],
+      datasets: [{
+        label: 'My Assignments',
+        data: [
+          {{ App\Models\StudentAssignment::where('student_id', auth()->user()->id)->where('status', 1)->count() }}, 
+          {{ App\Models\StudentAssignment::where('student_id', auth()->user()->id)->where('status', 2)->count() }}, 
+          {{ App\Models\StudentAssignment::where('student_id', auth()->user()->id)->where('status', 3)->count() }}, 
+          {{ App\Models\StudentAssignment::where('student_id', auth()->user()->id)->where('status', 4)->count() }}
+        ],
+        backgroundColor: [
+          'rgb(255, 205, 86)',
+          'rgb(54, 162, 235)',
+          'rgb(51, 158, 1)',
+          'rgb(255, 99, 132)'
+        ],
+        hoverOffset: 4
+      }]
+    }
+  });
+  @endif
 </script>
 @endpush

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\AssignmnetController;
 use \App\Http\Controllers\AuthController;
 use \App\Http\Controllers\CashOutController;
 use \App\Http\Controllers\ClassController;
@@ -79,6 +80,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::put('cashouts/{cashout}/update', [CashOutController::class, 'update'])->name('cashouts.update');
     Route::delete('cashouts/destroy', [CashOutController::class, 'destroy'])->name('cashouts.destroy');
     Route::get('cashouts/{cashout}/view', [CashOutController::class, 'view'])->name('cashouts.view');
+
+    Route::get('assignments', [AssignmnetController::class, 'index'])->name('assignments.index');
 
     Route::get('users/create/students', [UserController::class, 'create'])->name('users.create');
     Route::get('users/create/staff', [UserController::class, 'create_staff'])->name('users.create_staff');

@@ -10,7 +10,12 @@ class CashOutController extends Controller
 {
     public function index()
     {
-        $cashouts = Cashout::orderBy('id', 'desc')->paginate(25);
+        if(auth()->user()->type == '1'){
+            $cashouts = Cashout::orderBy('id', 'desc')->paginate(25);
+        }else{
+            $cashouts = Cashout::where('teacher_id', auth()->user()->id)->orderBy('id', 'desc')->paginate(25);
+        }
+
         return view('cashouts.index', compact('cashouts'));
     }
 

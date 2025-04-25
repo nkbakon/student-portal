@@ -50,9 +50,17 @@
                                 <img src="{{ asset('assets/payment.svg') }}" alt="Payments Icon" class="w-5 h-5">
                                 <span class="font-semibold">Payments</span>
                             </li></a>
+                            @endif
+                            @if(auth()->user()->type != '3')
                             <a href="{{ route('cashouts.index') }}"><li class="{{ (request()->segment(1) == 'cashouts') ? 'bg-blue-900 border-blue-900': '' }} px-3 py-1 flex space-x-2 mt-4 rounded-md border-blue-800 cursor-pointer hover:bg-blue-900 hover:border-blue-900">					
                                 <img src="{{ asset('assets/cashout.svg') }}" alt="Cash Icon" class="w-5 h-5">
                                 <span class="font-semibold">Cash Out</span>
+                            </li></a>
+                            @endif
+                            @if(auth()->user()->type == '3')
+                            <a href="{{ route('assignments.index') }}"><li class="{{ (request()->segment(1) == 'assignments') ? 'bg-blue-900 border-blue-900': '' }} px-3 py-1 flex space-x-2 mt-4 rounded-md border-blue-800 cursor-pointer hover:bg-blue-900 hover:border-blue-900">					
+                                <img src="{{ asset('assets/assignments.svg') }}" alt="Cash Icon" class="w-5 h-5">
+                                <span class="font-semibold">Assignments</span>
                             </li></a>
                             @endif
                             <a href="{{ route('profile.index') }}"><li class="{{ (request()->segment(1) == 'profile') ? 'bg-blue-900 border-blue-900': '' }} px-3 py-1 flex space-x-2 mt-4 rounded-md border-blue-800 cursor-pointer hover:bg-blue-900 hover:border-blue-900">					
@@ -109,9 +117,17 @@
                                         <img src="{{ asset('assets/payment.svg') }}" alt="Payments Icon" class="w-5 h-5">
                                         <span class="font-semibold">Payments</span>
                                     </li></a>
+                                    @endif
+                                    @if(auth()->user()->type != '3')
                                     <a href="{{ route('cashouts.index') }}"><li class="{{ (request()->segment(1) == 'cashouts') ? 'bg-blue-900 border-blue-900': '' }} px-3 py-1 flex space-x-2 mt-4 rounded-md border-blue-800 cursor-pointer hover:bg-blue-900 hover:border-blue-900">					
                                         <img src="{{ asset('assets/cashout.svg') }}" alt="Cash Icon" class="w-5 h-5">
                                         <span class="font-semibold">Cash Out</span>
+                                    </li></a>
+                                    @endif
+                                    @if(auth()->user()->type == '3')
+                                    <a href="{{ route('assignments.index') }}"><li class="{{ (request()->segment(1) == 'assignments') ? 'bg-blue-900 border-blue-900': '' }} px-3 py-1 flex space-x-2 mt-4 rounded-md border-blue-800 cursor-pointer hover:bg-blue-900 hover:border-blue-900">					
+                                        <img src="{{ asset('assets/assignments.svg') }}" alt="Cash Icon" class="w-5 h-5">
+                                        <span class="font-semibold">Assignments</span>
                                     </li></a>
                                     @endif
                                     <a href="{{ route('profile.index') }}"><li class="{{ (request()->segment(1) == 'profile') ? 'bg-blue-900 border-blue-900': '' }} px-3 py-1 flex space-x-2 mt-4 rounded-md border-blue-800 cursor-pointer hover:bg-blue-900 hover:border-blue-900">					

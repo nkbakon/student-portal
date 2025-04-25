@@ -17,7 +17,15 @@ class ClassController extends Controller
 {
     public function index()
     {
-        $classes = TClass::orderBy('id', 'desc')->paginate(25);
+        if(auth()->user()->type == '1'){
+            $classes = TClass::orderBy('id', 'desc')->paginate(25);
+        }elseif(auth()->user()->type == '2'){
+            $classes = TClass::where('teacher_id', auth()->user()->id)->orderBy('id', 'desc')->paginate(25);
+        }else{
+            $classIds = ClassStudent::where('student_id', auth()->user()->id)->pluck('class_id');
+            $classes = TClass::whereIn('id', $classIds)->orderBy('id', 'desc')->paginate(25);
+        }
+
         return view('classes.index', compact('classes'));
     }
 

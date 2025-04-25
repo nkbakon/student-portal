@@ -20,7 +20,7 @@
     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-gray-100 overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 text-gray-900">
-                @if(auth()->user()->type != '3')
+                @if(auth()->user()->type == '1')
                 <a href="{{ route('classes.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-900 focus:ring-offset-2 transition ease-in-out duration-150">Add Class</a><br><br>
                 @endif
                 <div class="overflow-x-auto">
@@ -75,7 +75,7 @@
                                 </td>
                                 <td class="py-3 px-6"> 
                                     <a href="{{ route('classes.view', $class) }}" title="view" class="inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500 active:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition ease-in-out duration-150"><img src="{{ asset('assets/folder_open.svg') }}" alt="View Icon" class="w-3 h-3"></a>
-                                    @if(auth()->user()->type != '3')
+                                    @if(auth()->user()->type == '1')
                                     <a href="{{ route('classes.edit', $class) }}" class="inline-flex items-center px-4 py-2 bg-yellow-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-yellow-400 focus:bg-yellow-700 active:bg-yellow-900 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 transition ease-in-out duration-150"><img src="{{ asset('assets/edit.svg') }}" alt="Edit Icon" class="w-3 h-3"></a> 
                                     <button type="button" value="{{ $class->id }}" data-modal-toggle="deletePost" class="deleteBtn inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150"><img src="{{ asset('assets/trash.svg') }}" alt="Delete Icon" class="w-3 h-3"></button>                                        
                                     @endif
