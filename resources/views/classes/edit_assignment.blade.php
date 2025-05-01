@@ -112,7 +112,7 @@
 @push('js')
 <script>
     // Get today's date in YYYY-MM-DD format
-    let today = new Date().toISOString().split('T')[0];
+    let today = {{ $assignment->due_date }};
     // Set the min attribute of the date input
     document.getElementById("due_date").setAttribute("min", today);
 

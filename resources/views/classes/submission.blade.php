@@ -34,6 +34,9 @@
                         <span class="bg-gradient-to-tl from-red-600 to-pink-400 px-2 text-xs rounded py-1 inline-block whitespace-nowrap text-center align-baseline font-bold uppercase leading-none text-white">Deactivated</span>
                         @endif
                     </p> 
+                    <p class="text-gray-700">Zoom Link: <a href="{{ $assignment->zoom }}" target="_blank" class="text-sky-500">{{ $assignment->zoom }}</a></p>
+                    <p class="text-gray-700">WhatsApp Link: <a href="{{ $assignment->whatsapp }}" target="_blank" class="text-sky-500">{{ $assignment->whatsapp }}</a></p>
+                    <p class="text-gray-700">YouTube Link: <a href="{{ $assignment->youtube }}" target="_blank" class="text-sky-500">{{ $assignment->youtube }}</a></p>
                 </div><br>
                 <div class="flex justify-between"> 
                     <div>
