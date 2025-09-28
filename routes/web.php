@@ -9,6 +9,23 @@ use \App\Http\Controllers\PaymentController;
 use \App\Http\Controllers\SubjectController;
 use \App\Http\Controllers\UserController;
 
+Route::get('generate', function (){
+    \Illuminate\Support\Facades\Artisan::call('storage:link');
+    echo 'ok';
+});
+
+Route::get('database_migrate', function () {
+    try {
+        \Illuminate\Support\Facades\Artisan::call('config:clear');
+        \Illuminate\Support\Facades\Artisan::call('route:clear');
+        \Illuminate\Support\Facades\Artisan::call('cache:clear');
+        \Illuminate\Support\Facades\Artisan::call('migrate', ['--force' => true]);
+        echo 'Migrations have run successfully.';
+    } catch (\Exception $e) {
+        echo 'Error: ' . $e->getMessage();
+    }
+});
+
 Route::get('/', function () {
     return view('welcome');
 });
